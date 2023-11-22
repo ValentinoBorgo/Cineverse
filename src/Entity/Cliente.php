@@ -15,36 +15,30 @@ class Cliente
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $contraseña = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $correo = null;
+    #[ORM\Column(length: 255)]
+    private ?string $correo_electronico = null;
 
-    #[ORM\Column]
-    private ?bool $suscripcion = null;
+    #[ORM\Column(length: 255)]
+    private ?string $rol = null;
 
-    #[ORM\ManyToMany(targetEntity: Serie::class, mappedBy: 'cliente')]
-    private Collection $Serie;
+    #[ORM\OneToOne(inversedBy: 'clienteTipoSuscripcion', cascade: ['persist', 'remove'])]
+    private ?TipoSuscripcion $TipoSuscripcion = null;
 
-    #[ORM\ManyToMany(targetEntity: Pelicula::class, mappedBy: 'cliente')]
-    private Collection $pelicula;
+    #[ORM\ManyToOne(inversedBy: 'SuscripcionCliente')]
+    private ?Suscripcion $ClienteSuscripcion = null;
 
-    #[ORM\ManyToMany(targetEntity: Documental::class, mappedBy: 'cliente')]
-    private Collection $documental;
-
-    #[ORM\ManyToMany(targetEntity: Interaccion::class, mappedBy: 'cliente')]
-    private Collection $interaccion;
+    #[ORM\ManyToMany(targetEntity: Titulo::class, inversedBy: 'TituloCliente')]
+    private Collection $ClienteTitulo;
 
     public function __construct()
     {
-        $this->Serie = new ArrayCollection();
-        $this->pelicula = new ArrayCollection();
-        $this->documental = new ArrayCollection();
-        $this->interaccion = new ArrayCollection();
+        $this->ClienteTitulo = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,134 +70,74 @@ class Cliente
         return $this;
     }
 
-    public function getCorreo(): ?string
+    public function getCorreoElectronico(): ?string
     {
-        return $this->correo;
+        return $this->correo_electronico;
     }
 
-    public function setCorreo(string $correo): static
+    public function setCorreoElectronico(string $correo_electronico): static
     {
-        $this->correo = $correo;
+        $this->correo_electronico = $correo_electronico;
 
         return $this;
     }
 
-    public function isSuscripcion(): ?bool
+    public function getRol(): ?string
     {
-        return $this->suscripcion;
+        return $this->rol;
     }
 
-    public function setSuscripcion(bool $suscripcion): static
+    public function setRol(string $rol): static
     {
-        $this->suscripcion = $suscripcion;
+        $this->rol = $rol;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Serie>
-     */
-    public function getSerie(): Collection
+    public function getTipoSuscripcion(): ?TipoSuscripcion
     {
-        return $this->Serie;
+        return $this->TipoSuscripcion;
     }
 
-    public function addSerie(Serie $serie): static
+    public function setTipoSuscripcion(?TipoSuscripcion $TipoSuscripcion): static
     {
-        if (!$this->Serie->contains($serie)) {
-            $this->Serie->add($serie);
-            $serie->addCliente($this);
-        }
+        $this->TipoSuscripcion = $TipoSuscripcion;
 
         return $this;
     }
 
-    public function removeSerie(Serie $serie): static
+    public function getClienteSuscripcion(): ?Suscripcion
     {
-        if ($this->Serie->removeElement($serie)) {
-            $serie->removeCliente($this);
-        }
-
-        return $this;
+        return $this->ClienteSuscripcion;
     }
 
-    /**
-     * @return Collection<int, Pelicula>
-     */
-    public function getPelicula(): Collection
+    public function setClienteSuscripcion(?Suscripcion $ClienteSuscripcion): static
     {
-        return $this->pelicula;
-    }
-
-    public function addPelicula(Pelicula $pelicula): static
-    {
-        if (!$this->pelicula->contains($pelicula)) {
-            $this->pelicula->add($pelicula);
-            $pelicula->addCliente($this);
-        }
-
-        return $this;
-    }
-
-    public function removePelicula(Pelicula $pelicula): static
-    {
-        if ($this->pelicula->removeElement($pelicula)) {
-            $pelicula->removeCliente($this);
-        }
+        $this->ClienteSuscripcion = $ClienteSuscripcion;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Documental>
+     * @return Collection<int, Titulo>
      */
-    public function getDocumental(): Collection
+    public function getClienteTitulo(): Collection
     {
-        return $this->documental;
+        return $this->ClienteTitulo;
     }
 
-    public function addDocumental(Documental $documental): static
+    public function addClienteTitulo(Titulo $clienteTitulo): static
     {
-        if (!$this->documental->contains($documental)) {
-            $this->documental->add($documental);
-            $documental->addCliente($this);
+        if (!$this->ClienteTitulo->contains($clienteTitulo)) {
+            $this->ClienteTitulo->add($clienteTitulo);
         }
 
         return $this;
     }
 
-    public function removeDocumental(Documental $documental): static
+    public function removeClienteTitulo(Titulo $clienteTitulo): static
     {
-        if ($this->documental->removeElement($documental)) {
-            $documental->removeCliente($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Interaccion>
-     */
-    public function getInteraccion(): Collection
-    {
-        return $this->interaccion;
-    }
-
-    public function addInteraccion(Interaccion $interaccion): static
-    {
-        if (!$this->interaccion->contains($interaccion)) {
-            $this->interaccion->add($interaccion);
-            $interaccion->addCliente($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInteraccion(Interaccion $interaccion): static
-    {
-        if ($this->interaccion->removeElement($interaccion)) {
-            $interaccion->removeCliente($this);
-        }
+        $this->ClienteTitulo->removeElement($clienteTitulo);
 
         return $this;
     }

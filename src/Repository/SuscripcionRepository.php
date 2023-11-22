@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Serie;
+use App\Entity\Suscripcion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Serie>
+ * @extends ServiceEntityRepository<Suscripcion>
  *
- * @method Serie|null find($id, $lockMode = null, $lockVersion = null)
- * @method Serie|null findOneBy(array $criteria, array $orderBy = null)
- * @method Serie[]    findAll()
- * @method Serie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Suscripcion|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Suscripcion|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Suscripcion[]    findAll()
+ * @method Suscripcion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SerieRepository extends ServiceEntityRepository
+class SuscripcionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Serie::class);
+        parent::__construct($registry, Suscripcion::class);
     }
 
 //    /**
-//     * @return Serie[] Returns an array of Serie objects
+//     * @return Suscripcion[] Returns an array of Suscripcion objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class SerieRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Serie
+//    public function findOneBySomeField($value): ?Suscripcion
 //    {
 //        return $this->createQueryBuilder('s')
 //            ->andWhere('s.exampleField = :val')
