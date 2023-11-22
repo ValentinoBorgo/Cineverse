@@ -36,6 +36,9 @@ class Cliente
     #[ORM\ManyToMany(targetEntity: Titulo::class, inversedBy: 'TituloCliente')]
     private Collection $ClienteTitulo;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nombre_usuario = null;
+
     public function __construct()
     {
         $this->ClienteTitulo = new ArrayCollection();
@@ -138,6 +141,18 @@ class Cliente
     public function removeClienteTitulo(Titulo $clienteTitulo): static
     {
         $this->ClienteTitulo->removeElement($clienteTitulo);
+
+        return $this;
+    }
+
+    public function getNombreUsuario(): ?string
+    {
+        return $this->nombre_usuario;
+    }
+
+    public function setNombreUsuario(string $nombre_usuario): static
+    {
+        $this->nombre_usuario = $nombre_usuario;
 
         return $this;
     }
