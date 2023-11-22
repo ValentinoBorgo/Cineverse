@@ -30,6 +30,9 @@ class Titulo
     #[ORM\Column(length: 255)]
     private ?string $actores_principales = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $descripcion = null;
+
     #[ORM\Column]
     private ?int $año_lanzamiento = null;
 
@@ -70,6 +73,17 @@ class Titulo
         return $this;
     }
 
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): static
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
     public function getTipo(): ?string
     {
         return $this->tipo;
