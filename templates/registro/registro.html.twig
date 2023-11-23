@@ -5,50 +5,75 @@
     <a href="{{ path('app_login') }}" class="btn btn-danger">Volver</a>
     <h1 style="display: flex; justify-content: center; font-size: 50px;">Registro</h1>
 </div>
-    <br></br>
+<br></br>
 
-    {% for label, messages in app.flashes() %}
-    {% for message in messages %}
-    {% if label == 'exito' %}
-    <div class="alert alert-success">
-        {{message}}
-    </div>
-    {% else %}
-    <div class="alert alert-danger">
-        {{message}}
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endfor %}
+{% for label, messages in app.flashes() %}
+{% for message in messages %}
+{% if label == 'exito' %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% else %}
+<div class="alert alert-danger">
+    {{message}}
+</div>
+{% endif %}
+{% endfor %}
+{% endfor %}
 
-    <form action="{{ path('registro_manager') }}" method="post" id="form_registro">
+<form action="{{ path('registro_manager') }}" method="post" id="form_registro" onsubmit="return validateForm()">
     <label for="registro_nombre">Nombre Completo</label>
     <div>
         <input type="text" name="nombre_completo" required>
     </div>
-   
+
     <label for="">Nombre de Usuario</label>
     <div>
         <input type="text" name="nombre_usuario" required>
     </div>
-    
-    <label for="" >Correo Electronico</label>
+
+    <label for="">Correo Electronico</label>
     <div>
-        <input type="text" name="correo_electronico" required>
-    </div>
-   
-    <label for="" >Contraseña</label>
-    <div>
-        <input type="password" name="contraseña" required>
-    </div>
-    
-    <label for="">Repetir Contraseña</label>
-    <div>
-        <input type="password" name="repetir_contraseña" required>
+        <input type="email" name="correo_electronico" required>
     </div>
 
-</br>
+    <label for="">Contraseña</label>
+    <div>
+        <input type="password" name="contraseña" id="contraseñaOrg" required>
+    </div>
+
+    <label for="">Repetir Contraseña</label>
+    <div>
+        <input type="password" name="repetir_contraseña" id="contraseña_repetida" required>
+    </div>
+
+    <span id="contraseñaErronea" style="color: red;"></span>
+
+    </br>
     <input type="submit" value="Registrarme" class="btn btn-primary">
 </form>
+
+<script>
+    function validateForm() {
+        let contraseña = document.getElementById('contraseñaOrg').value;
+        let contraseña_repetida = document.getElementById('contraseña_repetida').value;
+        let contraseña_erronea = document.getElementById('contraseñaErronea');
+        let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
+
+        if (!regex.test(contraseña)) {
+            contraseña_erronea.innerHTML = 'La contraseña debe tener al menos una mayúscula, una minúscula, un número, un carácter especial y tener al menos 8 caracteres.';
+            return false;
+        }
+
+        if(contraseña === contraseña_repetida){
+            contraseña_erronea.innerHTML = '';
+            return true;
+        }else{
+            contraseña_erronea.innerHTML = 'Las contraseñas no coinciden';
+            return false;
+        }
+
+    }
+</script>
 
 {% endblock %}
