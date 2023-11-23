@@ -6,9 +6,12 @@ use App\Repository\ClienteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
 
 #[ORM\Entity(repositoryClass: ClienteRepository::class)]
-class Cliente
+class Cliente implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,8 +27,8 @@ class Cliente
     #[ORM\Column(length: 255)]
     private ?string $correo_electronico = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $rol = null;
+    #[ORM\Column(type : 'json')]
+    private $rol = [];
 
     #[ORM\OneToOne(inversedBy: 'clienteTipoSuscripcion', cascade: ['persist', 'remove'])]
     private ?TipoSuscripcion $TipoSuscripcion = null;
@@ -61,7 +64,7 @@ class Cliente
         return $this;
     }
 
-    public function getContraseña(): ?string
+    public function getPassword(): ?string
     {
         return $this->contraseña;
     }
@@ -85,12 +88,12 @@ class Cliente
         return $this;
     }
 
-    public function getRol(): ?string
+    public function getRoles()
     {
         return $this->rol;
     }
 
-    public function setRol(string $rol): static
+    public function setRoles(array $rol)
     {
         $this->rol = $rol;
 
@@ -145,7 +148,7 @@ class Cliente
         return $this;
     }
 
-    public function getNombreUsuario(): ?string
+    public function getUsername()
     {
         return $this->nombre_usuario;
     }
@@ -155,5 +158,15 @@ class Cliente
         $this->nombre_usuario = $nombre_usuario;
 
         return $this;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        
     }
 }

@@ -39,3 +39,6 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+    role_hierarchy:
+        ROLE_PREMIUM: ROLE_USER
+        ROLE_GRATUITO: ROLE_USER

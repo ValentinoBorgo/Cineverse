@@ -6,11 +6,21 @@
     <h1 style="display: flex; justify-content: center; font-size: 50px;">Registro</h1>
 </div>
     <br></br>
-    {% for message in app.flashes('exito') %}
+
+    {% for label, messages in app.flashes() %}
+    {% for message in messages %}
+    {% if label == 'exito' %}
     <div class="alert alert-success">
         {{message}}
     </div>
+    {% else %}
+    <div class="alert alert-danger">
+        {{message}}
+    </div>
+    {% endif %}
     {% endfor %}
+    {% endfor %}
+
     <form action="{{ path('registro_manager') }}" method="post" id="form_registro">
     <label for="registro_nombre">Nombre Completo</label>
     <div>
@@ -19,22 +29,22 @@
    
     <label for="">Nombre de Usuario</label>
     <div>
-        <input type="text" name="nombre_usuario">
+        <input type="text" name="nombre_usuario" required>
     </div>
     
     <label for="" >Correo Electronico</label>
     <div>
-        <input type="text" name="correo_electronico">
+        <input type="text" name="correo_electronico" required>
     </div>
    
     <label for="" >Contraseña</label>
     <div>
-        <input type="password" name="contraseña">
+        <input type="password" name="contraseña" required>
     </div>
     
     <label for="">Repetir Contraseña</label>
     <div>
-        <input type="password" name="repetir_contraseña">
+        <input type="password" name="repetir_contraseña" required>
     </div>
 
 </br>

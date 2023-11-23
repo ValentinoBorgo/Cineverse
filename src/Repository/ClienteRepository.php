@@ -21,6 +21,10 @@ class ClienteRepository extends ServiceEntityRepository
         parent::__construct($registry, Cliente::class);
     }
 
+    public function verificarDatosRepetidos(){
+
+    }
+
 //    /**
 //     * @return Cliente[] Returns an array of Cliente objects
 //     */
