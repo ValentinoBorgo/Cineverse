@@ -9,20 +9,22 @@
 <header>
     <h1 id="titulo">CINEVERSE 🎥</h1>
     {# <a href="{{ path('app_logout') }}">Logout</a> #}
-    <form method="post" accept-charset="UTF-8">
+    <form method="post" accept-charset="UTF-8" id="form_login">
 
         <input type="hidden" name="action" value="users/login">
 
         <h3><label for="loginName">Username o email</label></h3>
-        <input id="loginName" type="text" name="loginName">
+        <input id="loginName" type="text" name="loginName" style="width: 400px;">
 
         <h3><label for="password">Contraseña</label></h3>
         <input id="password" type="password" name="password">
 
+    </br>
 
-        <input type="submit" value="Ingresar" style="color: green;">
-
-        <a href="{{ path('registro_cliente') }}">Registro</a>
+        <div>
+            <input type="submit" value="Ingresar" class="btn btn-success">
+            <a href="{{ path('registro_cliente') }}" class="btn btn-primary">Registro</a>
+        </div>
 
         {% if errorMessage is defined %}
         <p>{{ errorMessage }}</p>
