@@ -16,6 +16,14 @@ Class LoginController extends AbstractController
     {
         return $this->render('login/index.html.twig');
     }
+
+    /**
+    * @Route("/registro", name="registro_cliente")
+    */
+    public function pantallaRegistrar(): Response
+    {
+        return $this->render('registro/registro.html.twig');
+    }
 }
 
 ?>
