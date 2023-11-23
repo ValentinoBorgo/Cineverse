@@ -6,32 +6,38 @@
     <h1 style="display: flex; justify-content: center; font-size: 50px;">Registro</h1>
 </div>
     <br></br>
-    <form action="" method="post">
-    <label for="" style="font-size: 20px;">Nombre Completo</label>
-    <div>
-        <input type="">
+    {% for message in app.flashes('exito') %}
+    <div class="alert alert-success">
+        {{message}}
     </div>
-    <br></br>
-    <label for="" style="font-size: 20px;">Nombre de Usuario</label>
+    {% endfor %}
+    <form action="{{ path('registro_manager') }}" method="post" id="form_registro">
+    <label for="registro_nombre">Nombre Completo</label>
     <div>
-        <input type="">
+        <input type="text" name="nombre_completo" required>
     </div>
-    <br></br>
-    <label for=""style="font-size: 20px;" >Correo Electronico</label>
+   
+    <label for="">Nombre de Usuario</label>
     <div>
-        <input type="">
+        <input type="text" name="nombre_usuario">
     </div>
-    <br></br>
-    <label for="" style="font-size: 20px;">Contraseña</label>
+    
+    <label for="" >Correo Electronico</label>
     <div>
-        <input type="">
+        <input type="text" name="correo_electronico">
     </div>
-    <br></br>
-    <label for="" style="font-size: 20px;">Repetir Contraseña</label>
+   
+    <label for="" >Contraseña</label>
     <div>
-        <input type="">
+        <input type="password" name="contraseña">
     </div>
-    <br></br>
+    
+    <label for="">Repetir Contraseña</label>
+    <div>
+        <input type="password" name="repetir_contraseña">
+    </div>
+
+</br>
     <input type="submit" value="Registrarme" class="btn btn-primary">
 </form>
 
