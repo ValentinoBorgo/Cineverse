@@ -7,34 +7,26 @@
 {% endif %} #}
 
 
-<div id="logo-container">
-    <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
+<div>
+    <a href="{{ path('app_login') }}" class="btn btn-danger" style="margin: 1rem;">Volver</a>
+    <div id="logo-container">
+        <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
+    </div>
 </div>
 
-{#<h1 id="titulo">CINEVERSE 🎥</h1>#}
-{# <a href="{{ path('app_logout') }}">Logout</a> #}
-<form method="post" accept-charset="UTF-8" id="form_login">
+<div style="display: flex; justify-content: space-between;">
+    <h1>Nombre</h1>
+    <h1>Usuario</h1>
+    <h1>Correo</h1>
+</div>
 
-    <input type="hidden" name="action" value="users/login">
-
-    <h3><label for="loginName">Username o email</label></h3>
-    <input id="loginName" type="text" name="loginName" style="width: 400px;">
-
-    <h3><label for="password">Contraseña</label></h3>
-    <input id="password" type="password" name="password">
-
-    </br>
-
-    <div>
-        <input type="submit" value="Ingresar" class="btn btn-success">
-        <a href="{{ path('registro_cliente') }}" class="btn btn-primary">Registro</a>
-        <a href="{{ path('mok_datos') }}" class="btn btn-dark">MOK Clientes</a>
-    </div>
-
-    {% if errorMessage is defined %}
-    <p>{{ errorMessage }}</p>
-    {% endif %}
-</form>
+{% for cliente in clientes %}
+<div style="border: 3px solid red; display: flex; justify-content: space-between; margin: 1rem;">
+    <p>{{cliente.nombre}}</p>
+    <p>{{cliente.nombre_usuario}}</p>
+    <p>{{cliente.correo_electronico}}</p>
+</div>
+{% endfor %}
 
 <footer>
     <div class="container-footer w-container">

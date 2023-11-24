@@ -29,6 +29,9 @@ class Cliente implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type : 'json')]
     private $rol = [];
+    
+    #[ORM\Column(length: 255)]
+    private ?string $nombre_usuario = null;
 
     #[ORM\OneToOne(inversedBy: 'clienteTipoSuscripcion', cascade: ['persist', 'remove'])]
     private ?TipoSuscripcion $TipoSuscripcion = null;
@@ -39,8 +42,6 @@ class Cliente implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Titulo::class, inversedBy: 'TituloCliente')]
     private Collection $ClienteTitulo;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nombre_usuario = null;
 
     public function __construct()
     {
@@ -76,7 +77,7 @@ class Cliente implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCorreoElectronico(): ?string
+    public function getcorreo_electronico(): ?string
     {
         return $this->correo_electronico;
     }
@@ -149,6 +150,11 @@ class Cliente implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getUsername()
+    {
+        return $this->nombre_usuario;
+    }
+
+    public function getnombre_usuario():?string
     {
         return $this->nombre_usuario;
     }

@@ -5,4 +5,5 @@ index:
 registro_manager:
     path: /registroController
     controller: App\Controller\RegistroManager::registrarCliente
-    methods: [POST]      
+    methods: [POST]
+      

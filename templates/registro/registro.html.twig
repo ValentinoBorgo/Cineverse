@@ -2,7 +2,9 @@
 
 {% block body %}
 <div>
-    <a href="{{ path('app_login') }}" class="btn btn-danger">Volver</a>
+    <div style="padding: 1rem;">
+        <a href="{{ path('app_login') }}" class="btn btn-danger">Volver</a>
+    </div>
     <h1 style="display: flex; justify-content: center; font-size: 50px;">Registro</h1>
 </div>
 <br></br>
@@ -21,7 +23,17 @@
 {% endfor %}
 {% endfor %}
 
-<form action="{{ path('registro_manager') }}" method="post" id="form_registro" onsubmit="return validateForm()">
+{#TIENE QUE MOSTRAR TODOS LOS DATOS REPETIDOS#}
+{% if nombre is defined or nombre_usuario is defined or correo_electronico is defined %}
+      <div>
+        <span style="color: red;">
+            Los siguientes datos ya se encuentran ocupados, intente nuevamente
+            : {{ nombre ?? "" }} {{ nombre_usuario ?? "" }} {{ correo_electronico ?? "" }}
+        </span>
+      </div>
+{% endif %}
+
+<form style="margin: 1rem;" action="{{ path('registro_manager') }}" method="post" id="form_registro" onsubmit="return validateForm()">
     <label for="registro_nombre">Nombre Completo</label>
     <div>
         <input type="text" name="nombre_completo" required>
@@ -54,7 +66,7 @@
 </form>
 
 <script>
-    function validateForm() {
+    function validarDatos() {
         let contraseña = document.getElementById('contraseñaOrg').value;
         let contraseña_repetida = document.getElementById('contraseña_repetida').value;
         let contraseña_erronea = document.getElementById('contraseñaErronea');
