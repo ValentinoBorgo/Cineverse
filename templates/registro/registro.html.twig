@@ -24,16 +24,35 @@
 {% endfor %}
 
 {#TIENE QUE MOSTRAR TODOS LOS DATOS REPETIDOS#}
-{% if nombre is defined or nombre_usuario is defined or correo_electronico is defined %}
-      <div>
-        <span style="color: red;">
-            Los siguientes datos ya se encuentran ocupados, intente nuevamente
-            : {{ nombre ?? "" }} {{ nombre_usuario ?? "" }} {{ correo_electronico ?? "" }}
-        </span>
+{% if arrayValoresString is defined %}
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display: block;">
+      <div class="toast-header">
+        <img src="{{ asset('c.svg') }}" class="rounded me-2" alt="..." style="width: 30px;">
+        <strong class="me-auto">Datos Erroneos</strong>
+        <small>Ahora</small>
       </div>
+      <div class="toast-body">
+        Los siguientes datos ya se encuentran ocupados, intente nuevamente
+        <b style="color: red;">
+            : {{ arrayValoresString ?? "" }}
+        </b>
+      </div>
+    </div>
+  </div>
+
 {% endif %}
 
-<form style="margin: 1rem;" action="{{ path('registro_manager') }}" method="post" id="form_registro" onsubmit="return validateForm()">
+<script>
+    setTimeout(function() {
+        $('#liveToast').fadeOut(1000, function() {
+            $(this).remove();
+        });
+    }, 7000);
+</script>
+
+<form style="margin: 1rem;" action="{{ path('registro_manager') }}" method="post" id="form_registro" onsubmit="return validarDatos()">
     <label for="registro_nombre">Nombre Completo</label>
     <div>
         <input type="text" name="nombre_completo" required>

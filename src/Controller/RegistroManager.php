@@ -27,19 +27,18 @@ class RegistroManager extends AbstractController{
                 $repetirContraseña = $request->request->get('repetir_contraseña');
 
                 $clienteRepository = $this->getDoctrine()->getRepository(Cliente::class);
-                $buscarDatosBD = $clienteRepository->encontrarNombre($nombre, $nombreUsuario, $correoElectronico);
+                $buscarDatosBD = $clienteRepository->verificarDatosRepetidos($nombre, $nombreUsuario, $correoElectronico);
                 $tamanoArray = sizeof($buscarDatosBD);
 
                 if($tamanoArray > 0){
-                    for($i = 0; $i <= $tamanoArray; $i++){
-                        if($buscarDatosBD[$i] == $nombre){
-                            return $this->render('registro/registro.html.twig',['nombre' => $nombre]);
-                        }elseif($buscarDatosBD[$i] == $nombreUsuario){
-                            return $this->render('registro/registro.html.twig',['nombre_usuario' => $nombreUsuario]);
-                        }elseif($buscarDatosBD[$i] == $correoElectronico){
-                            return $this->render('registro/registro.html.twig',['correo_electronico' => $correoElectronico]);
+                    $arrayValoresStrings = [];
+                    for($i = 0; $i < $tamanoArray; $i++){
+                        if($buscarDatosBD[$i] == $nombre || $buscarDatosBD[$i] == $nombreUsuario || $buscarDatosBD[$i] == $correoElectronico){
+                            $arrayValoresStrings[] = $buscarDatosBD[$i];
                         }
                     }
+                    $parseoArrayString = implode(", ", $arrayValoresStrings);
+                    return $this->render('registro/registro.html.twig',['arrayValoresString' => $parseoArrayString]);
                 }
 
                     if($contraseña === $repetirContraseña){

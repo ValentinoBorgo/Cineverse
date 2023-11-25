@@ -21,11 +21,11 @@ class ClienteRepository extends ServiceEntityRepository
         parent::__construct($registry, Cliente::class);
     }
 
-    public function verificarDatosRepetidos() {
+    /*public function verificarDatosRepetidos() {
         return $this->findAll();
-    }
+    }*/
 
-    public function encontrarNombre($nombre, $nombre_usuario, $correo_electronico): ?array
+    public function verificarDatosRepetidos($nombre, $nombre_usuario, $correo_electronico): ?array
     {
 
         $repetidos = [];
@@ -36,9 +36,13 @@ class ClienteRepository extends ServiceEntityRepository
 
         if ($clienteNombre) {
             $repetidos[] = $clienteNombre->getNombre();
-        }elseif($clienteNombre_Usuario){
+        }
+        
+        if($clienteNombre_Usuario){
             $repetidos[] = $clienteNombre_Usuario->getnombre_usuario();
-        }elseif($clienteCorreo_Electronico){
+        }
+        
+        if($clienteCorreo_Electronico){
             $repetidos[] = $clienteCorreo_Electronico->getcorreo_electronico();
         }
 

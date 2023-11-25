@@ -70,6 +70,11 @@ class Cliente implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->contraseña;
     }
 
+    public function getcontraseña(): ?string
+    {
+        return $this->contraseña;
+    }
+
     public function setContraseña(string $contraseña): static
     {
         $this->contraseña = $contraseña;
