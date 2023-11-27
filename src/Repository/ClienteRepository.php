@@ -21,9 +21,6 @@ class ClienteRepository extends ServiceEntityRepository
         parent::__construct($registry, Cliente::class);
     }
 
-    /*public function verificarDatosRepetidos() {
-        return $this->findAll();
-    }*/
     public function save(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -55,6 +52,7 @@ class ClienteRepository extends ServiceEntityRepository
 
         $this->save($user, true);
     }
+    
     public function verificarDatosRepetidos($nombre, $nombre_usuario, $correo_electronico): ?array
     {
 

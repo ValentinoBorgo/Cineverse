@@ -21,10 +21,11 @@ Class LoginController extends AbstractController
     $error = $authenticationUtils->getLastAuthenticationError();
     // last username entered by the user
     $lastUsername = $authenticationUtils->getLastUsername();
+
     return $this->render('login/index.html.twig', [
     'last_username' => $lastUsername,
     'error' => $error,
- ]);
+    ]);
  }
     /**
     * @Route("/registro", name="registro_cliente")
@@ -41,13 +42,6 @@ Class LoginController extends AbstractController
         $repository = $doctrine->getRepository(Cliente::class);
         $mok = $repository->findAll();
          return $this->render('login/mok.html.twig', ['clientes' => $mok]);
-    }
-    /**
-    * @Route("/lista", name="pagina_principal")
-    */
-    public function paginaPrincipal(): Response
-    {
-        return $this->render('titulo/lista.html.twig');
     }
  }
 

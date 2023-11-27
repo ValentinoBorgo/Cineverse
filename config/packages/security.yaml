@@ -21,6 +21,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: lista_titulos
             logout:
                 path: app_logout
 
@@ -35,10 +36,10 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: PUBLIC_ACCESS }
         - { path: ^/registro, roles: PUBLIC_ACCESS }
         - { path: ^/mok, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/lista_titulos, roles: ROLE_USER }
         
 
 when@test:

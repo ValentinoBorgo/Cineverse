@@ -2,40 +2,70 @@
 
 {% block body %}
 
-{# {% if error %}
-<div>Usuario o contraseña incorrecta</div>
-{% endif %} #}
-
-
 <div id="logo-container">
     <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
 </div>
 
-{#<h1 id="titulo">CINEVERSE 🎥</h1>#}
-{# <a href="{{ path('app_logout') }}">Logout</a> #}
 
-<form action="{{ path('app_login') }}" method="post" accept-charset="UTF-8" id="form_login">
+<form action = "{{ path('app_login') }}" method="post" accept-charset="UTF-8" id="form_login">
 
     <input type="hidden" name="action" value="users/login">
 
     <h3><label for="loginName">Username</label></h3>
-    <input id="loginName" type="text" name="loginName" value="{{ last_username }}" style="width: 400px;">
+    <div class="input-group" style="margin-top: 10px;">
+        <input id="loginName" type="text" name="_username" value="{{ last_username }}" style="width: 400px;"  class="form-control">
+    </div>
+
 
     <h3><label for="password">Contraseña</label></h3>
-    <input id="password" type="password" name="password">
+    <div class="input-group" style="margin-top: 10px;">
+        <input id="password" type="password" name="_password" class="form-control" style="margin-right: 10px;">
+        <button type="button" id="togglePassword" class="btn btn-outline-secondary" style="border-radius: 0.5rem;">Mostrar</button>
+    </div>
 
     </br>
 
     <div>
-        <a href="{{ path('pagina_principal') }}" class="btn btn-primary">Ingresar</a>
+        <button type="submit" class="btn btn-success">Ingresar</button>
         <a href="{{ path('registro_cliente') }}" class="btn btn-primary">Registro</a>
         <a href="{{ path('mok_datos') }}" class="btn btn-dark">MOK Clientes</a>
     </div>
 
-    {% if errorMessage is defined %}
-    <p>{{ errorMessage }}</p>
+    {% if error != null %}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display: block;">
+          <div class="toast-header">
+            <img src="{{ asset('c.svg') }}" class="rounded me-2" alt="..." style="width: 30px;">
+            <strong class="me-auto">Datos Erroneos</strong>
+            <small>Ahora</small>
+          </div>
+          <div class="toast-body">
+            <b style="color: red;">
+                Usuario o contraseña erroneos
+            </b>
+          </div>
+        </div>
+      </div>
     {% endif %}
+
 </form>
+
+<script>
+    setTimeout(function() {
+        $('#liveToast').fadeOut(1000, function() {
+            $(this).remove();
+        });
+    }, 2000);
+</script>
+
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        let passwordInput = document.getElementById('password');
+        let currentType = passwordInput.getAttribute('type');
+        passwordInput.setAttribute('type', currentType === 'password' ? 'text' : 'password');
+        this.textContent = currentType === 'password' ? 'Ocultar' : 'Mostrar';
+    });
+</script>
 
 <footer>
     <div class="container-footer w-container">

@@ -6,3 +6,8 @@ registro_manager:
     path: /registroController
     controller: App\Controller\RegistroManager::registrarCliente
     methods: [POST]
+
+lista_titulos:
+    path: /lista_titulos
+    controller: App\Controller\ListadoTitulosManager::paginaPrincipal
+

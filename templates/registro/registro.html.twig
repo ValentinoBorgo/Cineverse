@@ -71,11 +71,13 @@
     <label for="">Contraseña</label>
     <div>
         <input type="password" name="contraseña" id="contraseñaOrg" required>
+        <button type="button" id="togglePassword1" class="btn btn-outline-secondary" style="border-radius: 0.5rem; font-size: small;">Mostrar</button>
     </div>
 
     <label for="">Repetir Contraseña</label>
     <div>
         <input type="password" name="repetir_contraseña" id="contraseña_repetida" required>
+        <button type="button" id="togglePassword2" class="btn btn-outline-secondary" style="border-radius: 0.5rem; font-size: small">Mostrar</button>
     </div>
 
     <span id="contraseñaErronea" style="color: red;"></span>
@@ -83,6 +85,22 @@
     </br>
     <input type="submit" value="Registrarme" class="btn btn-primary">
 </form>
+
+<script>
+    document.getElementById('togglePassword1').addEventListener('click', function () {
+        let passwordInput = document.getElementById('contraseñaOrg');
+        let currentType = passwordInput.getAttribute('type');
+        passwordInput.setAttribute('type', currentType === 'password' ? 'text' : 'password');
+        this.textContent = currentType === 'password' ? 'Ocultar' : 'Mostrar';
+    });
+
+    document.getElementById('togglePassword2').addEventListener('click', function () {
+        let passwordInput = document.getElementById('contraseña_repetida');
+        let currentType = passwordInput.getAttribute('type');
+        passwordInput.setAttribute('type', currentType === 'password' ? 'text' : 'password');
+        this.textContent = currentType === 'password' ? 'Ocultar' : 'Mostrar';
+    });
+</script>
 
 <script>
     function validarDatos() {
