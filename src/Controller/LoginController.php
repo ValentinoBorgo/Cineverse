@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Cliente;
 
@@ -14,11 +15,17 @@ Class LoginController extends AbstractController
     /**
     * @Route("/login", name="app_login")
     */
-    public function index(): Response
+    public function index(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('login/index.html.twig');
-    }
-
+    // get the login error if there is one
+    $error = $authenticationUtils->getLastAuthenticationError();
+    // last username entered by the user
+    $lastUsername = $authenticationUtils->getLastUsername();
+    return $this->render('login/index.html.twig', [
+    'last_username' => $lastUsername,
+    'error' => $error,
+ ]);
+ }
     /**
     * @Route("/registro", name="registro_cliente")
     */
@@ -35,7 +42,13 @@ Class LoginController extends AbstractController
         $mok = $repository->findAll();
          return $this->render('login/mok.html.twig', ['clientes' => $mok]);
     }
-
+    /**
+    * @Route("/lista", name="pagina_principal")
+    */
+    public function paginaPrincipal(): Response
+    {
+        return $this->render('titulo/lista.html.twig');
+    }
  }
 
 ?>

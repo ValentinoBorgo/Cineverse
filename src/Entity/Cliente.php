@@ -170,6 +170,15 @@ class Cliente implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->nombre_usuario;
+    }
 
     public function getSalt()
     {
