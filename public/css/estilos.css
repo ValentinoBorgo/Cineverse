@@ -36,6 +36,18 @@
     border-radius: 0.5rem;
 }
 
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  width: 18rem;
+  margin: 10px;
+}
+
 div.container-footer.w-container {
     background-color: black;
     padding: 1rem;

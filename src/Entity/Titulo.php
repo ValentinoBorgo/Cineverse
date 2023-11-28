@@ -25,31 +25,31 @@ class Titulo
     private ?string $genero = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $director = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $actores_principales = null;
 
     #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
 
     #[ORM\Column]
-    private ?int $año_lanzamiento = null;
-
-    #[ORM\Column]
-    private ?int $cantidad_capitulos = null;
+    private ?string $fecha_lanzamiento = null;
 
     #[ORM\Column]
     private ?int $me_gusta = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $comentario = null;
+    private ?array $comentario = null;
 
     #[ORM\Column]
-    private ?bool $premium = null;
+    private ?array $premium = null;
 
     #[ORM\ManyToMany(targetEntity: Cliente::class, mappedBy: 'ClienteTitulo')]
     private Collection $TituloCliente;
+
+    #[ORM\Column(length: 2083)]
+    private ?string $imagen = null;
+
+    #[ORM\Column(length: 2083)]
+    private ?string $video = null;
 
     public function __construct()
     {
@@ -84,7 +84,7 @@ class Titulo
 
         return $this;
     }
-    public function getTipo(): ?string
+    public function gettip(): ?string
     {
         return $this->tipo;
     }
@@ -108,19 +108,8 @@ class Titulo
         return $this;
     }
 
-    public function getDirector(): ?string
-    {
-        return $this->director;
-    }
 
-    public function setDirector(string $director): static
-    {
-        $this->director = $director;
-
-        return $this;
-    }
-
-    public function getActoresPrincipales(): ?string
+    public function getactores_principales(): ?string
     {
         return $this->actores_principales;
     }
@@ -132,26 +121,14 @@ class Titulo
         return $this;
     }
 
-    public function getAñoLanzamiento(): ?int
+    public function getfecha_lanzamiento(): ?string
     {
-        return $this->año_lanzamiento;
+        return $this->fecha_lanzamiento;
     }
 
-    public function setAñoLanzamiento(int $año_lanzamiento): static
+    public function setFechaLanzamiento(string $fecha_lanzamiento): static
     {
-        $this->año_lanzamiento = $año_lanzamiento;
-
-        return $this;
-    }
-
-    public function getCantidadCapitulos(): ?int
-    {
-        return $this->cantidad_capitulos;
-    }
-
-    public function setCantidadCapitulos(int $cantidad_capitulos): static
-    {
-        $this->cantidad_capitulos = $cantidad_capitulos;
+        $this->fecha_lanzamiento = $fecha_lanzamiento;
 
         return $this;
     }
@@ -168,24 +145,24 @@ class Titulo
         return $this;
     }
 
-    public function getComentario(): ?string
+    public function getComentario(): ?array
     {
         return $this->comentario;
     }
 
-    public function setComentario(string $comentario): static
+    public function setComentario(array $comentario): static
     {
         $this->comentario = $comentario;
 
         return $this;
     }
 
-    public function isPremium(): ?bool
+    public function getPremium(): ?array
     {
         return $this->premium;
     }
 
-    public function setPremium(bool $premium): static
+    public function setPremium(array $premium): static
     {
         $this->premium = $premium;
 
@@ -215,6 +192,30 @@ class Titulo
         if ($this->TituloCliente->removeElement($tituloCliente)) {
             $tituloCliente->removeClienteTitulo($this);
         }
+
+        return $this;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(string $imagen): static
+    {
+        $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(string $video): static
+    {
+        $this->video = $video;
 
         return $this;
     }
