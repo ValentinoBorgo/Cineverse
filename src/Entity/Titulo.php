@@ -27,7 +27,7 @@ class Titulo
     #[ORM\Column(length: 255)]
     private ?string $actores_principales = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 2083)]
     private ?string $descripcion = null;
 
     #[ORM\Column]

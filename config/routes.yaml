@@ -9,5 +9,5 @@ registro_manager:
 
 lista_titulos:
     path: /lista_titulos
-    controller: App\Controller\ListadoTitulosManager::paginaPrincipal
+    controller: App\Controller\ListadoTitulosManager::listarTitulos
 
