@@ -15,38 +15,57 @@ use Symfony\Component\HttpFoundation\Request;
 class ListadoTitulosManager extends AbstractController
 {
     private $APIKEY = 'ef9f64bda8bdd0db0e311faeb006b5e6';
-
     /**
      * @Route("/lista_titulos", name="pagina_principal")
      */
-    public function listarTitulos(ManagerRegistry $doctrine) : Response{
+    public function listarTitulos(ManagerRegistry $doctrine, HttpClientInterface $httpClient) : Response{
+        //FALTA PONER PARA USUARIO PREMIUN Y NO PREMINUN
         $repository = $doctrine->getRepository(Titulo::class);
         $titulos = $repository->findAll();
+    
+        if (empty($titulos)) {
+            $objectManager = $doctrine->getManager();
+            $this->load($httpClient, $objectManager);
+        }
+    
+        $titulos = $repository->findAll();
+
         return $this->render('titulo/lista.html.twig', [
             'data' => $titulos,
             'nombreUsuario' => $this->buscarUser()
         ]);
     }
-    
+
     /**
      * @Route("/filtrar_busqueda", name="busqueda")
      */
-    public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine): Response{
+    public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine): Response
+    {
         $busqueda = $request->query->get('busqueda');
         $repository = $doctrine->getRepository(Titulo::class);
-        $titulos = $repository->findAll();
+
+        // Construir una consulta personalizada utilizando LIKE para buscar títulos similares
+        $query = $repository->createQueryBuilder('t')
+            ->where('t.titulo LIKE :busqueda')
+            //evita inyeccion sql ya que si concateno directamente en el where es peligroso
+            ->setParameter('busqueda', '%' . $busqueda . '%')
+            ->getQuery();
+
+        $titulos = $query->getResult();
+
         return $this->render('titulo/lista.html.twig', [
             'data' => $titulos,
             'nombreUsuario' => $this->buscarUser(),
-            'busqueda' => $busqueda
         ]);
     }
+
     
     /**
      * @Route("/filtrar_categoria/{categoria}", name="filtrado")
      */
     public function filtrarPorCategoria(Request $request, ManagerRegistry $doctrine, $categoria): Response{
         $repository = $doctrine->getRepository(Titulo::class);
+        //FALTA PONER PARA USUARIO PREMIUN Y NO PREMINUN
 
         if($categoria == 'tv'){
             $titulos = $repository->findBy(['tipo' => $categoria]);
@@ -168,6 +187,7 @@ class ListadoTitulosManager extends AbstractController
 
                 $manager->persist($titulo);
             }
+            
             $manager-> flush();
 
         } catch (\Exception $e) {
