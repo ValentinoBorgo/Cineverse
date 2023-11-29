@@ -22,21 +22,67 @@ class ListadoTitulosManager extends AbstractController
     public function listarTitulos(ManagerRegistry $doctrine) : Response{
         $repository = $doctrine->getRepository(Titulo::class);
         $titulos = $repository->findAll();
-        return $this->render('titulo/lista.html.twig', ['data' => $titulos]);
+        return $this->render('titulo/lista.html.twig', [
+            'data' => $titulos,
+            'nombreUsuario' => $this->buscarUser()
+        ]);
+    }
+    
+    /**
+     * @Route("/filtrar_busqueda", name="busqueda")
+     */
+    public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine): Response{
+        $busqueda = $request->query->get('busqueda');
+        $repository = $doctrine->getRepository(Titulo::class);
+        $titulos = $repository->findAll();
+        return $this->render('titulo/lista.html.twig', [
+            'data' => $titulos,
+            'nombreUsuario' => $this->buscarUser(),
+            'busqueda' => $busqueda
+        ]);
+    }
+    
+    /**
+     * @Route("/filtrar_categoria/{categoria}", name="filtrado")
+     */
+    public function filtrarPorCategoria(Request $request, ManagerRegistry $doctrine, $categoria): Response{
+        $repository = $doctrine->getRepository(Titulo::class);
+
+        if($categoria == 'tv'){
+            $titulos = $repository->findBy(['tipo' => $categoria]);
+        }
+
+        if($categoria == 'movie'){
+            $titulos = $repository->findBy(['tipo' => $categoria]); 
+        }
+
+        if ($categoria == 'movie_Documentary') {
+            $titulos = $repository->findBy(['tipo' => 'movie', 'genero' => 'Documentary']);
+        }
+
+        if ($categoria == 'all') {
+            $titulos = $repository->findAll();
+        }
+        
+
+        return $this->render('titulo/lista.html.twig', [
+            'data' => $titulos,
+            'categoria' => $categoria,
+            'nombreUsuario' => $this->buscarUser()
+        ]);
     }
 
     public function load(HttpClientInterface $httpClient, ObjectManager $manager): void
     {
         //BRING ME DATA OF MOVIES TV AND DOCUMENTALS
         $apiURLMOVIES = 'https://api.themoviedb.org/3/person/popular?api_key=' . $this->APIKEY;
-        $apiURLSERIES = 'https://api.themoviedb.org/3/tv/top_rated?api_key=' . $this->APIKEY;
         $datosTitulos = [];
         
         try {
-
+            
             $responseMOVIES = $httpClient->request('GET', $apiURLMOVIES);
             $dataMOVIES = $responseMOVIES->toArray();
-          
+            
             //Reccorer todos los datos que me devuelve la solicitud get http
             foreach($dataMOVIES['results'] as $result ){
                 $titulo = new Titulo();
@@ -125,19 +171,14 @@ class ListadoTitulosManager extends AbstractController
             $manager-> flush();
 
         } catch (\Exception $e) {
-            echo $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            throw new \RuntimeException('Error al cargar datos: ' . $e->getMessage());
         }
     }
 
-    /**
-     * @Route("/filtrar_categoria/{categoria}", name="filtrado")
-     */
-    public function filtrarPorCategoria(Request $request, ManagerRegistry $doctrine, $categoria): Response{
-        $repository = $doctrine->getRepository(Titulo::class);
-        $titulos = $repository->findAll();
-        return $this->render('titulo/lista.html.twig', [
-            'data' => $titulos,
-            'categoria' => $categoria
-        ]);
+    public function buscarUser(){
+        $usuario = $this->getUser();
+        $nombreUsuario = $usuario->getNombre();
+        return $nombreUsuario;
     }
+
 }

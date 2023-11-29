@@ -2,17 +2,31 @@
 
 {% block body %}
 
-<div style="padding: 1rem;">
-    <a href="{{ path('app_logout') }}" class="btn btn-danger">Cerrar Sesión</a>
-	<div id="logo-container">
-		<img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
-	</div>
+<div style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+	<a href="{{ path('app_logout') }}" class="btn btn-danger">
+		<img width="30" height="30" src="https://img.icons8.com/ios-filled/50/reply-arrow.png" alt="reply-arrow"/>
+	</a>
+    <div>
+        <div id="logo-container">
+            <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
+        </div>
+    </div>
+    <div style="display: flex; align-items: center;">
+        <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 40px; margin-right: 8px;">
+        <b>{{ nombreUsuario }}</b>
+    </div>
 </div>
+
 
     </br>
 
 	<div class="container text-center">
 		<div class="row" style="border-radius: 10px; overflow: hidden;">
+			<div class="col" style="box-sizing: border-box; padding: 0; margin-right: 10px;">
+				<a href="{{ path('filtrado', {'categoria': 'all'}) }}" class="btn btn-warning" style="width: 100%; margin: 0;">
+					Todos
+				</a>
+			</div>
 			<div class="col" style="box-sizing: border-box; padding: 0; margin-right: 10px;">
 				<a href="{{ path('filtrado', {'categoria': 'tv'}) }}" class="btn btn-primary" style="width: 100%; margin: 0;">
 					Series
@@ -39,15 +53,21 @@
 	
 
 	<nav class="navbar navbar-light" style="display: flex; justify-content: center; background-color: transparent;">
-        <form class="form-inline" style="display: flex;">
-            <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" style="width: 800px; margin-right: 10px;">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
-    </nav>
+		<form action="{{ path('busqueda') }}" class="form-inline" style="display: flex;">
+			<input name="busqueda" id="busquedaInput" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" style="width: 800px; margin-right: 10px;">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+				<img width="20" height="20" src="https://img.icons8.com/ios-filled/50/search.png" alt="search"/>
+			</button>
+		</form>
+	</nav>
 
-	{% if categoria is defined %}
-	{{ dump(categoria) }}
+	{% if busqueda is defined %}
+	<pre>
+		{{ dump(busqueda) }}
+	</pre>
 	{% endif %}
+	
+
 	
     
 	<div style="display: flex; flex-wrap: wrap; justify-content: space-around; padding: 4rem;">
@@ -63,12 +83,10 @@
 			  <li class="list-group-item">{{dat.tip}} / {{dat.genero}}</li>
 			</ul>
 			<div class="card-body">
-			  <a href="#" class="btn btn-primary">Ver Titulo</a>
+			  <a href="#" class="btn btn-primary">Mas Información</a>
 			</div>
 		  </div>	
 		{% endfor %}
 	</div>
-
-	{{ dump(data) }}
 
 {% endblock %}

@@ -11,3 +11,6 @@ lista_titulos:
     path: /lista_titulos
     controller: App\Controller\ListadoTitulosManager::listarTitulos
 
+busqueda:
+    path: /filtrar_busqueda
+    controller: App\Controller\ListadoTitulosManager::filtrarPorBusqueda
