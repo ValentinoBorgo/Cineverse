@@ -14,3 +14,8 @@ lista_titulos:
 mostrar_suscripcion:
     path: /suscripcion
     controller: App\Controller\SuscripcionManager::mostrarSuscripcion
+
+cancelar_suscripcion:
+    path: /cancelar_suscripcion
+    controller: App\Controller\SuscripcionManager::mostrarSuscripcion
+    

@@ -40,6 +40,8 @@ security:
         - { path: ^/registro, roles: PUBLIC_ACCESS }
         - { path: ^/mok, roles: PUBLIC_ACCESS }
         - { path: ^/lista_titulos, roles: ROLE_USER }
+        - { path: ^/suscripcion, roles: ROLE_USER }
+        - { path: ^/cancelar_suscripcion, roles: ROLE_USER }
         
 
 when@test:

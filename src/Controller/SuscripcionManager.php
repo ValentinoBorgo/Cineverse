@@ -49,10 +49,9 @@ class SuscripcionManager extends AbstractController
     $suscripcion->setFechaCaducidad($fechaVencimiento);
     if ($precioElegido !== null) {
       $tipoSuscripcion->setPrecio((int)$precioElegido);
-  } else {
-    $tipoSuscripcion->setPrecio(0);
-      
-  }
+    } else {
+    $tipoSuscripcion->setPrecio(0);  
+    }
     $tipoSuscripcion->setMesesRestantes($mesesRestantes);
 
     $entitym = $this->getDoctrine()->getManager();
@@ -65,14 +64,38 @@ class SuscripcionManager extends AbstractController
 
     $cliente->setTipoSuscripcion($tipoSuscripcion);
     $cliente->setClienteSuscripcion($suscripcion);
-
+    $cliente->setRoles(['ROLE_PREMIUM']);
     $entitym->persist($cliente);
     $entitym-> flush();
+
+    return $this->render('suscripcion/suscripcion.html.twig');
    }
    return $this->render('suscripcion/suscripcion.html.twig');
 
  }
-      
+ /**
+ * @Route("/cancelar_suscripcion", name="cancelar_suscripcion", methods={"POST", "GET"})
+ */
+public function cancelarSuscripcion(Request $request, Security $security): Response
+{
+   $user = $security->getUser();
+
+   $cliente = $user;
+       
+   $entityManager = $this->getDoctrine()->getManager();
+    // Eliminar relaciones
+    $cliente->setTipoSuscripcion(null);
+    $cliente->setClienteSuscripcion(null);
+  
+   $cliente->setRoles(['ROLE_GRATUITO']);
+   
+   
+   $entityManager->flush();
+
+   return $this->render('suscripcion/suscripcion.html.twig');
+       
+ }
+
 }
 
 
