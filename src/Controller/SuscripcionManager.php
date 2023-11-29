@@ -48,7 +48,7 @@ class SuscripcionManager extends AbstractController
     
     $suscripcion->setFechaCaducidad($fechaVencimiento);
     if ($precioElegido !== null) {
-      $tipoSuscripcion->setPrecio((int)$precioElegido);
+      $tipoSuscripcion->setPrecio($precioElegido);
     } else {
     $tipoSuscripcion->setPrecio(0);  
     }
@@ -83,12 +83,13 @@ public function cancelarSuscripcion(Request $request, Security $security): Respo
    $cliente = $user;
        
    $entityManager = $this->getDoctrine()->getManager();
-    // Eliminar relaciones
+
     $cliente->setTipoSuscripcion(null);
     $cliente->setClienteSuscripcion(null);
   
-   $cliente->setRoles(['ROLE_GRATUITO']);
+    $cliente->setRoles(['ROLE_GRATUITO']);
    
+   $entityManager->persist($cliente);
    
    $entityManager->flush();
 

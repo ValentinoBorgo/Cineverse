@@ -15,13 +15,13 @@
         <option value="3">3 meses</option>
         <option value="6">6 meses</option>
     </select>
-<div id="precio">Precio: $<span id="precio_valor">500</span></div>
+<input type="value" name="precio_valor" id="precio_valor" required>
 
 <button class="btn btn-primary" type="submit" onclick="realizarPago()">Pagar</button>
     <script>
     function actualizarPrecio() {
         var duracionSelect = document.getElementById("duracion_suscripcion");
-        var precioSpan = document.getElementById("precio_valor");
+        var precioInput = document.getElementById("precio_valor");
 
         var duracionSeleccionada = duracionSelect.value;
         var precio;
@@ -40,8 +40,7 @@
                 precio = 500; // Precio predeterminado 
                 break;
         }
-
-        precioSpan.textContent = parseInt(precio); 
+        precioInput.value = precio;
     }
     function realizarPago() {
         alert("Pago exitoso por $" + document.getElementById("precio_valor").textContent);

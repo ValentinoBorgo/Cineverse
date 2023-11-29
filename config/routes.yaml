@@ -18,4 +18,3 @@ mostrar_suscripcion:
 cancelar_suscripcion:
     path: /cancelar_suscripcion
     controller: App\Controller\SuscripcionManager::mostrarSuscripcion
-    
