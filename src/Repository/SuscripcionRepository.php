@@ -20,7 +20,21 @@ class SuscripcionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Suscripcion::class);
     }
+    public function calcularFechaVencimiento($mes)
+    {
+        // Obtiene la fecha actual
+        $fechaActual = new \DateTime();
 
+        // Añade la duración en meses
+        $fechaVencimiento = $fechaActual->add(new \DateInterval('P' . $mes . 'M'));
+
+        // Transforma la fecha en una cadena
+        $fechaVencimientoFormateada = $fechaVencimiento->format('d/m/Y');
+
+        return $fechaVencimientoFormateada;
+    }
+        
+}
 //    /**
 //     * @return Suscripcion[] Returns an array of Suscripcion objects
 //     */
@@ -45,4 +59,4 @@ class SuscripcionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+

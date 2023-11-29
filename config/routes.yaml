@@ -11,3 +11,6 @@ lista_titulos:
     path: /lista_titulos
     controller: App\Controller\ListadoTitulosManager::paginaPrincipal
 
+mostrar_suscripcion:
+    path: /suscripcion
+    controller: App\Controller\SuscripcionManager::mostrarSuscripcion
