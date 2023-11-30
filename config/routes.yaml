@@ -7,14 +7,17 @@ registro_manager:
     controller: App\Controller\RegistroManager::registrarCliente
     methods: [POST]
 
-lista_titulos:
-    path: /lista_titulos
+listar_titulos:
+    path: /listar_titulos
     controller: App\Controller\ListadoTitulosManager::paginaPrincipal
-
+    methods: [GET, PUT]
+    
 mostrar_suscripcion:
     path: /suscripcion
     controller: App\Controller\SuscripcionManager::mostrarSuscripcion
+    methods: [GET, POST]
 
 cancelar_suscripcion:
     path: /cancelar_suscripcion
-    controller: App\Controller\SuscripcionManager::mostrarSuscripcion
+    controller: App\Controller\SuscripcionManager::cancelarSuscripcion
+    methods: [GET, POST]

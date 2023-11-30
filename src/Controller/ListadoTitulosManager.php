@@ -11,10 +11,11 @@ use Doctrine\Persistence\ManagerRegistry;
 Class ListadoTitulosManager extends AbstractController
 {
     /**
-    * @Route("/lista_titulos", name="pagina_principal")
+    * @Route("/listar_titulos", name="pagina_principal", methods={"GET", "PUT"})
     */
     public function paginaPrincipal(): Response
     {
+        dump($this->getUser());
         return $this->render('titulo/lista.html.twig');
     }
  }
