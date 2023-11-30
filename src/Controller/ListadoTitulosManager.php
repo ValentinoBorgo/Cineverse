@@ -15,8 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ListadoTitulosManager extends AbstractController
 {
     private $APIKEY = 'ef9f64bda8bdd0db0e311faeb006b5e6';
+
     /**
-     * @Route("/lista_titulos", name="pagina_principal")
+     * @Route("/listar_titulos", name="pagina_principal")
      */
     public function listarTitulos(ManagerRegistry $doctrine, HttpClientInterface $httpClient) : Response{
         //FALTA PONER PARA USUARIO PREMIUN Y NO PREMINUN
@@ -39,7 +40,7 @@ class ListadoTitulosManager extends AbstractController
     /**
      * @Route("/filtrar_busqueda", name="busqueda")
      */
-    public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine): Response
+    public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine, $busqueda): Response
     {
         $busqueda = $request->query->get('busqueda');
         $repository = $doctrine->getRepository(Titulo::class);
@@ -59,7 +60,7 @@ class ListadoTitulosManager extends AbstractController
         ]);
     }
 
-    
+
     /**
      * @Route("/filtrar_categoria/{categoria}", name="filtrado")
      */
@@ -90,6 +91,7 @@ class ListadoTitulosManager extends AbstractController
             'nombreUsuario' => $this->buscarUser()
         ]);
     }
+
 
     public function load(HttpClientInterface $httpClient, ObjectManager $manager): void
     {

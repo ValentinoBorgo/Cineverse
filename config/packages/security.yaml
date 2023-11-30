@@ -21,7 +21,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: lista_titulos
+                default_target_path: pagina_principal
             logout:
                 path: app_logout
 
@@ -39,7 +39,9 @@ security:
         - { path: ^/, roles: PUBLIC_ACCESS }
         - { path: ^/registro, roles: PUBLIC_ACCESS }
         - { path: ^/mok, roles: PUBLIC_ACCESS }
-        - { path: ^/lista_titulos, roles: ROLE_USER }
+        - { path: ^/listar_titulos, roles: ROLE_USER }
+        - { path: ^/suscripcion, roles: ROLE_USER }
+        - { path: ^/cancelar_suscripcion, roles: ROLE_USER }
         
 
 when@test:
