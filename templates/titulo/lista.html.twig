@@ -3,10 +3,12 @@
 {% block body %}
 
 <div style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-	<a href="{{ path('app_logout') }}" class="btn btn-danger">
-		<img width="30" height="30" src="https://img.icons8.com/ios-filled/50/reply-arrow.png" alt="reply-arrow"/>
-	</a>
-	<a href="{{ path('mostrar_suscripcion') }}" class="btn btn-primary">Premium</a>
+	<div style="display: flexbox;">
+		<a href="{{ path('app_logout') }}" class="btn btn-danger">
+			<img width="20" height="20" src="https://img.icons8.com/ios-filled/50/reply-arrow.png" alt="reply-arrow"/>
+		</a>
+		<a href="{{ path('mostrar_suscripcion') }}" class="btn btn-primary">Premium</a>
+	</div>
     <div>
         <div id="logo-container">
             <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
@@ -76,7 +78,7 @@
 			  <li class="list-group-item">{{dat.tip}} / {{dat.genero}}</li>
 			</ul>
 			<div class="card-body">
-			  <a href="#" class="btn btn-primary">Mas Información</a>
+			  <a href="{{ path('info_titulo', {id : dat.id}) }}" class="btn btn-primary">Mas Información</a>
 			</div>
 		  </div>	
 		{% endfor %}

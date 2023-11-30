@@ -10,14 +10,11 @@ registro_manager:
 listar_titulos:
     path: /listar_titulos
     controller: App\Controller\ListadoTitulosManager::paginaPrincipal
-    methods: [GET]
     
 mostrar_suscripcion:
     path: /suscripcion
     controller: App\Controller\SuscripcionManager::mostrarSuscripcion
-    methods: [GET, POST]
 
 cancelar_suscripcion:
     path: /cancelar_suscripcion
     controller: App\Controller\SuscripcionManager::cancelarSuscripcion
-    methods: [GET, POST]

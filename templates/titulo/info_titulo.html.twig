@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+    <a href="{{ path('listar_titulos') }}" class="btn btn-danger">
+        <img width="20" height="20" src="https://img.icons8.com/ios-filled/50/reply-arrow.png" alt="reply-arrow"/>
+    </a>
+    <div>
+        <div id="logo-container">
+            <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
+        </div>
+    </div>
+    <div style="display: flex; align-items: center;">
+        <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 40px; margin-right: 8px;">
+        <b>{{ nombreUsuario }}</b>
+    </div>
+</div>
+
+<section style="display: flex; justify-content: space-between;" id="alturaTotal">
+    <div style="width: 70%;">
+        <section style="margin: 1rem;">
+            <div style="width: 1000px;">
+                <h1>{{ titulo_info.titulo }}</h1>
+                <p>{{ titulo_info.descripcion }} </p>
+                <p>Fecha de Lanzamiento : {{ titulo_info.fecha_lanzamiento }} </p>
+            </div>
+            <iframe width="1000" height="400" src="https://www.youtube.com/embed/biJaDGO7BZI?si=BCfV_ME6oAdbnqD-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style="border-radius: 0.5rem;" allowfullscreen></iframe>
+        </br>
+        </br>
+            <div style="padding: 0.5rem; border: 1px solid black; border-radius: 1rem; background-color: rgb(175, 175, 175); width: 90px;">
+                <button style="border: none; padding: 0; background: none; cursor: pointer; outline: none;">
+                    <img width="40" height="40" src="https://img.icons8.com/ios/50/like--v1.png" alt="like--v1"/>
+                </button>
+                <b style="font-size: large;">{{ titulo_info.me_gusta }}</b>
+            </div>
+        </br>
+            <h3>Comentarios</h3>
+        </br>
+        <textarea id="comentario" name="comentario" rows="5" cols="132" style="border-radius: 0.5rem;"></textarea>
+        </br>
+        </br>
+    
+        {#ACA IRIA UN FOR RECORRIENDO TODOS LOS COMENTARIOS#}
+
+    <div id="comentarios">
+        <div style="width: 1000px;">
+            <div>
+                <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 25px;">
+                <b>Nombre de Usuario  :</b>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ex atque voluptate! Aperiam consectetur libero, delectus sapiente voluptas voluptatem assumenda dolorem perferendis cumque? Nemo, voluptatem dignissimos necessitatibus culpa dolorum numquam!</p>
+        </div>
+    
+        </br>
+        </br>
+    
+        <div style="width: 1000px;">
+            <div>
+                <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 25px;">
+                <b>Nombre de Usuario  :</b>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ex atque voluptate! Aperiam consectetur libero, delectus sapiente voluptas voluptatem assumenda dolorem perferendis cumque? Nemo, voluptatem dignissimos necessitatibus culpa dolorum numquam!</p>
+        </div>
+    
+        </br>
+        </br>
+    
+        <div style="width: 1000px;">
+            <div>
+                <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 25px;">
+                <b>Nombre de Usuario  :</b>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ex atque voluptate! Aperiam consectetur libero, delectus sapiente voluptas voluptatem assumenda dolorem perferendis cumque? Nemo, voluptatem dignissimos necessitatibus culpa dolorum numquam!</p>
+        </div>
+        </section>
+    </div>
+
+    <div style="width: 30%;">
+        <div style="width: 100%; margin-left: 8rem;" id="imgContainer">
+            <img id="imagenDinamica" style="width: 280px; border-radius: 0.5rem;" src="https://lh3.googleusercontent.com/FwtOibhjh_PNQyUG9mbmkq_gav0y0L0jXZstug3TTeOgW-P3COXhm4zZT__bXKHh1Z08" alt="">
+        </div>
+    </div>
+    
+</section>
+
+<script>
+    function ajustarAlturaImagen() {
+        let alturaTotal = document.getElementById('alturaTotal');
+        let imagenContainer = document.getElementById('imgContainer');
+        let imagenDinamica = document.getElementById('imagenDinamica');
+
+        // Ajustar la altura de la imagen en función de la cantidad de comentarios
+        let alturaImagen = alturaTotal.scrollHeight;
+        imagenDinamica.style.height = alturaImagen + 'px';
+
+        // Desplazar la imagen al final
+        imagenContainer.scrollTop = imagenContainer.scrollHeight;
+    }
+
+    document.addEventListener('DOMContentLoaded', ajustarAlturaImagen);
+</script>
+
+
+{% endblock %}

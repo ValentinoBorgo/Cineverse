@@ -133,10 +133,16 @@ class Titulo
         return $this;
     }
 
+    public function getme_gusta(): ?int
+    {
+        return $this->me_gusta;
+    }
+
     public function getMeGusta(): ?int
     {
         return $this->me_gusta;
     }
+
 
     public function setMeGusta(int $me_gusta): static
     {
