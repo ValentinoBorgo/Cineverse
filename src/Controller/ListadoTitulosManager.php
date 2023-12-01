@@ -40,7 +40,7 @@ class ListadoTitulosManager extends AbstractController
     /**
      * @Route("/filtrar_busqueda", name="busqueda")
      */
-    public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine, $busqueda): Response
+    public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine): Response
     {
         $busqueda = $request->query->get('busqueda');
         $repository = $doctrine->getRepository(Titulo::class);

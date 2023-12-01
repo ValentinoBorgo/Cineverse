@@ -52,6 +52,34 @@ class TituloManager extends AbstractController{
         ]);
     }
 
+    /**
+    * @Route("/{id}", name="poner_megusta")
+    */
+    public function ponerMeGusta(ManagerRegistry $doctrine){
+
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+        }
+
+        $repository = $doctrine->getRepository(Titulo::class);
+        $titulo = $repository->find($id);
+        
+        $numeroMG = $titulo->getme_gusta();
+        $titulo->setMeGusta($numeroMG + 1);
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($titulo);
+        $entityManager->flush();
+
+        $usuario = $this->getUser();
+        $nombreUsuario = $usuario->getNombre();
+
+        return $this->render('titulo/info_titulo.html.twig',[
+            'nombreUsuario' => $nombreUsuario,
+            'titulo_info' => $titulo
+        ]);
+    }
+
 }
 
 ?>

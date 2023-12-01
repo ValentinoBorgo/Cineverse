@@ -29,9 +29,9 @@
         </br>
         </br>
             <div style="padding: 0.5rem; border: 1px solid black; border-radius: 1rem; background-color: rgb(175, 175, 175); width: 90px;">
-                <button style="border: none; padding: 0; background: none; cursor: pointer; outline: none;">
+                <a href="{{ path('poner_megusta', {id : titulo_info.id}) }}" style="border: none; padding: 0; background: none; cursor: pointer; outline: none;">
                     <img width="40" height="40" src="https://img.icons8.com/ios/50/like--v1.png" alt="like--v1"/>
-                </button>
+                </a>
                 <b style="font-size: large;">{{ titulo_info.me_gusta }}</b>
             </div>
         </br>

@@ -71,12 +71,10 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
             $entitym->persist($cliente);
             $entitym-> flush();
 
-            dump($this->getUser());
 
             return $this->render('suscripcion/suscripcion.html.twig');
           }
 
-          dump($this->getUser());
 
           return $this->render('suscripcion/suscripcion.html.twig');
 

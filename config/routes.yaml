@@ -18,3 +18,7 @@ mostrar_suscripcion:
 cancelar_suscripcion:
     path: /cancelar_suscripcion
     controller: App\Controller\SuscripcionManager::cancelarSuscripcion
+
+poner_megusta:
+    path: /titulo
+    controller: App\Controller\TituloManager::ponerMeGusta
