@@ -25,7 +25,7 @@
                 <p>{{ titulo_info.descripcion }} </p>
                 <p>Fecha de Lanzamiento : {{ titulo_info.fecha_lanzamiento }} </p>
             </div>
-            <iframe width="1000" height="400" src="https://www.youtube.com/embed/biJaDGO7BZI?si=BCfV_ME6oAdbnqD-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style="border-radius: 0.5rem;" allowfullscreen></iframe>
+            <iframe width="1000" height="400" src={{titulo_info.video}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style="border-radius: 0.5rem;" allowfullscreen></iframe>
         </br>
         </br>
             <div style="padding: 0.5rem; border: 1px solid black; border-radius: 1rem; background-color: rgb(175, 175, 175); width: 90px;">
@@ -38,8 +38,16 @@
             <h3>Comentarios</h3>
         </br>
         <textarea id="comentario" name="comentario" rows="5" cols="132" style="border-radius: 0.5rem;"></textarea>
-        </br>
-        </br>
+        
+        {#AGREGAR UN BOTON DE CANCELAR Y OTRO DE COMENTAR#}
+    </br>
+    </br>
+
+        <button class="btn btn-danger">Cancelar</button>
+        <button class="btn btn-success">Comentar</button>
+        
+    </br>
+    </br>
     
         {#ACA IRIA UN FOR RECORRIENDO TODOS LOS COMENTARIOS#}
 
