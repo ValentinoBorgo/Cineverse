@@ -4,10 +4,14 @@
     font-family: 'Oswald', sans-serif;
 }
 
+
+
 #logo-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 1rem; /* Radio de borde de 1 rem */
+    overflow: hidden; 
 }
 
 #logo {
@@ -35,7 +39,6 @@
     width: 300px;
     border-radius: 0.5rem;
 }
-
 div.container-footer.w-container {
     background-color: black;
     padding: 1rem;

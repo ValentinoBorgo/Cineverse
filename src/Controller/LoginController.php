@@ -34,15 +34,6 @@ Class LoginController extends AbstractController
     {
         return $this->render('registro/registro.html.twig');
     }
-
-    /**
-    * @Route("/mok", name="mok_datos")
-    */
-    public function mok(ManagerRegistry $doctrine): Response{
-        $repository = $doctrine->getRepository(Cliente::class);
-        $mok = $repository->findAll();
-         return $this->render('login/mok.html.twig', ['clientes' => $mok]);
-    }
  }
 
 ?>

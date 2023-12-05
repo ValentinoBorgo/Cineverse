@@ -1,25 +1,30 @@
 {% extends 'base.html.twig' %}
-
+{# suscripcion.html.twig #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/suscripcion.css') }}">
+{% endblock %}
 {% block body %}
 <div style="padding: 1rem;">
-    <a href="{{ path('pagina_principal') }}" class="btn btn-danger">Volver</a>
-    <a href="{{ path('cancelar') }}" class="btn btn-danger">Cancelar Suscripcion</a>
+    <a href="{{ path('pagina_principal') }}" class="btn btn-outline-light">Volver</a>
 	<div id="logo-container">
-		<img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
+		<img src="{{ asset('c_logo.png') }}" alt="Logo de Cineverse" id="logo">
 	</div>
 </div>
 
-
+<div id="div_formulario_suscripcion">
 <form style="margin: 1rem;" action="{{ path('mostrar_suscripcion') }}" method="post" id="form_suscripcion" >
-    <label for="duracion_suscripcion">Duración de suscripción (Planes disponibles para 1, 3 o 6 meses)</label>
+    <h2 class="h2_suscripcion"> Premium Cineverse </h2> 
+    <label for="duracion_suscripcion"></label>
     <select id="duracion_suscripcion" name="duracion_suscripcion" onchange="actualizarPrecio()" required>
+        <option value="" disabled selected>Duracion de suscripcion</option>
         <option value="1">1 mes</option>
         <option value="3">3 meses</option>
         <option value="6">6 meses</option>
     </select>
-<input type="value" name="precio_valor" id="precio_valor" required>
-
-<button class="btn btn-primary" type="submit" onclick="realizarPago()">Pagar</button>
+<input type="value" name="precio_valor" id="precio_valor" readonly required>
+<a href="{{ path('cancelar') }}" class="btn btn-outline-danger">Cancelar Suscripcion</a>
+<button class="btn btn-outline-success" type="submit" onclick="realizarPago()">Pagar</button>
 
     <script>
     function actualizarPrecio() {
@@ -46,11 +51,18 @@
         precioInput.value = precio;
     }
     function realizarPago() {
-        alert("Pago exitoso por $" + document.getElementById("precio_valor").textContent);
+        if(document.getElementById("precio_valor").value !=0 ){
+            alert("Pago exitoso por $" + document.getElementById("precio_valor").value);
+        }
+        else
+        {
+            alert("Debe seleccionar una plan de pago primero");
+            
+        }
         
     }
     </script>
     
 </form>
-
+</div>
 {% endblock %}

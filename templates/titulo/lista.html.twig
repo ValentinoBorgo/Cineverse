@@ -1,22 +1,25 @@
 {% extends 'base.html.twig' %}
-
+{# lista.html.twig #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/lista.css') }}">
+{% endblock %}
 {% block body %}
 
 <div style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
 	<div style="display: flexbox;">
-		<a href="{{ path('app_logout') }}" class="btn btn-danger">
-			<img width="20" height="20" src="https://img.icons8.com/ios-filled/50/reply-arrow.png" alt="reply-arrow"/>
-		</a>
-		<a href="{{ path('mostrar_suscripcion') }}" class="btn btn-primary">Premium</a>
+		<a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerran Sesion </a>
+			
+		<a href="{{ path('mostrar_suscripcion') }}" class="btn btn-outline-primary">Premium</a>
 	</div>
     <div>
         <div id="logo-container">
-            <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
+            <img src="{{ asset('c_logo.png') }}" alt="Logo de Cineverse" id="logo">
         </div>
     </div>
     <div style="display: flex; align-items: center;">
         <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 40px; margin-right: 8px;">
-        <b>{{ nombreUsuario }}</b>
+        <b style="color: white;">{{ nombreUsuario }}</b>
     </div>
 </div>
 
@@ -81,23 +84,23 @@
 	{% endfor %}
 	{% endfor %}
     
-	<div style="display: flex; flex-wrap: wrap; justify-content: space-around; padding: 4rem;">
-		{% for dat in data %}
-		<div class="card" style="width: calc(33.33% - 40px); margin: 10px;">
-			<img src={{dat.imagen}} class="card-img-top" alt="...">
-			<div class="card-body">
-			  <h5 class="card-title">{{dat.titulo}}</h5>
-			</div>
-			<ul class="list-group list-group-flush">
-			  <li class="list-group-item">{{dat.actores_principales}}</li>
-			  <li class="list-group-item">{{dat.fecha_lanzamiento}}</li>
-			  <li class="list-group-item">{{dat.tip}} / {{dat.genero}}</li>
-			</ul>
-			<div class="card-body">
-			  <a href="{{ path('info_titulo', {id : dat.id}) }}" class="btn btn-primary">Mas Información</a>
-			</div>
-		  </div>	
-		{% endfor %}
-	</div>
+	<div class="card-container">
+    {% for dat in data %}
+        <div class="card">
+            <img src="{{dat.imagen}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{dat.titulo}}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{dat.actores_principales}}</li>
+                <li class="list-group-item">{{dat.fecha_lanzamiento}}</li>
+                <li class="list-group-item">{{dat.tip}} / {{dat.genero}}</li>
+            </ul>
+            <div class="card-body">
+                <a href="{{ path('info_titulo', {id : dat.id}) }}" class="btn btn-outline-secondary">Mas Información</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock %}
