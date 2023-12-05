@@ -49,11 +49,11 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
             $tipoSuscripcion = new TipoSuscripcion();
             
             $suscripcion->setFechaCaducidad($fechaVencimiento);
-            if ($precioElegido !== null) {
-              $tipoSuscripcion->setPrecio($precioElegido);
-            } else {
-            $tipoSuscripcion->setPrecio(0);  
-            }
+              if ($precioElegido !== null) {
+                  $tipoSuscripcion->setPrecio($precioElegido);
+              } else {
+                $tipoSuscripcion->setPrecio(0);  
+              }
             $tipoSuscripcion->setMesesRestantes($mesesRestantes);
 
             $entitym = $this->getDoctrine()->getManager();

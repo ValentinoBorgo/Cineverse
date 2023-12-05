@@ -20,6 +20,19 @@
 <section style="display: flex; justify-content: space-between;" id="alturaTotal">
     <div style="width: 70%;">
         <section style="margin: 1rem;">
+            {% for label, messages in app.flashes() %}
+                {% for message in messages %}
+                    {% if label == 'exito' %}
+                    <div class="alert alert-success">
+                        {{message}}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger">
+                        {{message}}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
             <div style="width: 1000px;">
                 <h1>{{ titulo_info.titulo }}</h1>
                 <p>{{ titulo_info.descripcion }} </p>
@@ -35,16 +48,28 @@
                 <b style="font-size: large;">{{ titulo_info.me_gusta }}</b>
             </div>
         </br>
-            <h3>Comentarios</h3>
+            <h3 style="text-decoration: underline;">Caja de Reseña</h3>
         </br>
-        <textarea id="comentario" name="comentario" rows="5" cols="132" style="border-radius: 0.5rem;"></textarea>
+        <form method="post" action="{{ path('comentar', {id : titulo_info.id}) }}">
+            <textarea id="textComen" name="comentario" rows="5" cols="132" style="border-radius: 0.5rem;"></textarea>
+
+            </br>
+            </br>
+    
+                <button type="submit" class="btn btn-success">Comentar</button>
+                <button type="button" class="btn btn-danger" id="cancelar" onclick="borrarCampo()">Cancelar</button>
+        </form>
+        
+        <script>
+        
+            function borrarCampo() {
+                let textArea = document.getElementById('textComen');
+                 textArea.value = '';
+            }
+
+        </script>
         
         {#AGREGAR UN BOTON DE CANCELAR Y OTRO DE COMENTAR#}
-    </br>
-    </br>
-
-        <button class="btn btn-danger">Cancelar</button>
-        <button class="btn btn-success">Comentar</button>
         
     </br>
     </br>
@@ -52,35 +77,28 @@
         {#ACA IRIA UN FOR RECORRIENDO TODOS LOS COMENTARIOS#}
 
     <div id="comentarios">
-        <div style="width: 1000px;">
-            <div>
-                <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 25px;">
-                <b>Nombre de Usuario  :</b>
+
+        <h4> {{ titulo_info.comentario|length }} reseñas : </h4>
+
+        </br>
+        </br>
+
+
+        {% for ti in titulo_info.comentario %}
+
+            <div style="width: 1000px;">
+                <div>
+                    <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 25px;">
+                    <b> {{ ti[0] }}  :</b>
+                </div>
+                <p> {{ ti[1] }}</p>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ex atque voluptate! Aperiam consectetur libero, delectus sapiente voluptas voluptatem assumenda dolorem perferendis cumque? Nemo, voluptatem dignissimos necessitatibus culpa dolorum numquam!</p>
-        </div>
-    
-        </br>
-        </br>
-    
-        <div style="width: 1000px;">
-            <div>
-                <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 25px;">
-                <b>Nombre de Usuario  :</b>
-            </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ex atque voluptate! Aperiam consectetur libero, delectus sapiente voluptas voluptatem assumenda dolorem perferendis cumque? Nemo, voluptatem dignissimos necessitatibus culpa dolorum numquam!</p>
-        </div>
-    
-        </br>
-        </br>
-    
-        <div style="width: 1000px;">
-            <div>
-                <img src="{{ asset('usuario-de-perfil.png') }}" alt="perfil" style="width: 25px;">
-                <b>Nombre de Usuario  :</b>
-            </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ex atque voluptate! Aperiam consectetur libero, delectus sapiente voluptas voluptatem assumenda dolorem perferendis cumque? Nemo, voluptatem dignissimos necessitatibus culpa dolorum numquam!</p>
-        </div>
+        
+            </br>
+            </br>
+
+        {% endfor %}
+
         </section>
     </div>
 

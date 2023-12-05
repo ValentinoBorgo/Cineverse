@@ -7,14 +7,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\Titulo;
+use App\Entity\Cliente;
 use App\Repository\TituloRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class ListadoTitulosManager extends AbstractController
 {
     private $APIKEY = 'ef9f64bda8bdd0db0e311faeb006b5e6';
+    private $pag = 30;
 
     /**
      * @Route("/listar_titulos", name="pagina_principal")
@@ -23,13 +26,13 @@ class ListadoTitulosManager extends AbstractController
         //FALTA PONER PARA USUARIO PREMIUN Y NO PREMINUN
         $repository = $doctrine->getRepository(Titulo::class);
         $titulos = $repository->findAll();
-    
+        
         if (empty($titulos)) {
             $objectManager = $doctrine->getManager();
             $this->load($httpClient, $objectManager);
         }
-    
-        $titulos = $repository->findAll();
+        
+         $titulos = $this->traerDatosPorPremium($doctrine);;
 
         return $this->render('titulo/lista.html.twig', [
             'data' => $titulos,
@@ -42,22 +45,24 @@ class ListadoTitulosManager extends AbstractController
      */
     public function filtrarPorBusqueda(Request $request, ManagerRegistry $doctrine): Response
     {
+
+        $titulosDATA = $this->traerDatosPorPremium($doctrine);
         $busqueda = $request->query->get('busqueda');
-        $repository = $doctrine->getRepository(Titulo::class);
 
-        // Construir una consulta personalizada utilizando LIKE para buscar títulos similares
-        $query = $repository->createQueryBuilder('t')
-            ->where('t.titulo LIKE :busqueda')
-            //evita inyeccion sql ya que si concateno directamente en el where es peligroso
-            ->setParameter('busqueda', '%' . $busqueda . '%')
-            ->getQuery();
+        // Filtrar los resultados dentro de $titulosDATA que coincidan con la búsqueda
+        $titulosFiltrados = array_filter($titulosDATA, function ($titulo) use ($busqueda) {
+            //busca primera aparicion de una cadena 
+        return stripos($titulo->getTitulo(), $busqueda) !== false;
+    });
 
-        $titulos = $query->getResult();
+    if(!$titulosFiltrados){
+        $titulosFiltrados = $this->msgError();
+    }
 
-        return $this->render('titulo/lista.html.twig', [
-            'data' => $titulos,
-            'nombreUsuario' => $this->buscarUser(),
-        ]);
+    return $this->render('titulo/lista.html.twig', [
+        'data' => $titulosFiltrados,
+        'nombreUsuario' => $this->buscarUser(),
+    ]);
     }
 
 
@@ -65,23 +70,43 @@ class ListadoTitulosManager extends AbstractController
      * @Route("/filtrar_categoria/{categoria}", name="filtrado")
      */
     public function filtrarPorCategoria(Request $request, ManagerRegistry $doctrine, $categoria): Response{
-        $repository = $doctrine->getRepository(Titulo::class);
         //FALTA PONER PARA USUARIO PREMIUN Y NO PREMINUN
 
+        $titulosDATA = $this->traerDatosPorPremium($doctrine);
+
         if($categoria == 'tv'){
-            $titulos = $repository->findBy(['tipo' => $categoria]);
+            for ($i = 0; $i < count($titulosDATA) ; $i++) { 
+                if($titulosDATA[$i]->gettip() === $categoria){
+                    $titulos[] = $titulosDATA[$i];
+                }
+            }
         }
 
         if($categoria == 'movie'){
-            $titulos = $repository->findBy(['tipo' => $categoria]); 
+            for ($i = 0; $i < count($titulosDATA) ; $i++) { 
+                if($titulosDATA[$i]->gettip() === $categoria){
+                    $titulos[] = $titulosDATA[$i];
+                }
+            }
         }
 
         if ($categoria == 'movie_Documentary') {
-            $titulos = $repository->findBy(['tipo' => 'movie', 'genero' => 'Documentary']);
+            for ($i = 0; $i < count($titulosDATA) ; $i++) {
+                $movie =  $titulosDATA[$i]->gettip();
+                $Documentary = $titulosDATA[$i]->getGenero();
+                $movie_Documentary = $movie. '_' .$Documentary;
+                if($movie_Documentary === $categoria){
+                    $titulos[] = $titulosDATA[$i];
+                }
+            }
         }
 
         if ($categoria == 'all') {
-            $titulos = $repository->findAll();
+            $titulos = $titulosDATA;
+        }
+
+        if(!$titulos){
+            $titulos = $this->msgError();
         }
         
 
@@ -96,7 +121,7 @@ class ListadoTitulosManager extends AbstractController
     public function load(HttpClientInterface $httpClient, ObjectManager $manager): void
     {
         //BRING ME DATA OF MOVIES TV AND DOCUMENTALS
-        $apiURLMOVIES = 'https://api.themoviedb.org/3/person/popular?api_key=' . $this->APIKEY;
+        $apiURLMOVIES = 'https://api.themoviedb.org/3/person/popular?api_key=' . $this->APIKEY . '&page=' . $this->pag;
         $datosTitulos = [];
         
         try {
@@ -111,7 +136,8 @@ class ListadoTitulosManager extends AbstractController
                 $titulo->setActoresPrincipales($result['name']);
                 $titulo->setMeGusta(0);
                 $titulo->setComentario([]);
-                $titulo->setPremium([]);
+                $roles = ['ROLE_PREMIUM', 'ROLE_GRATUITO'];
+                $titulo->setPremium([$roles[array_rand($roles)]]);
                 $titulo->setVideo('');
 
                 $apiIMG = 'https://image.tmdb.org/t/p/w500' .$result['known_for'][0]['backdrop_path'];
@@ -201,6 +227,60 @@ class ListadoTitulosManager extends AbstractController
         $usuario = $this->getUser();
         $nombreUsuario = $usuario->getNombre();
         return $nombreUsuario;
+    }
+
+    private function traerDatosPorPremium(ManagerRegistry $doctrine){
+
+        $repository = $doctrine->getRepository(Titulo::class);
+
+        $nombreCliente = $this->buscarUser();
+
+        $dql = 'SELECT s.fecha_caducidad FROM App\Entity\Cliente c 
+        INNER JOIN c.ClienteSuscripcion s
+        WHERE c.nombre = :nombreCliente';
+
+        $entityManager = $doctrine->getManager();
+        $consulta = $entityManager->createQuery($dql);
+        $consulta->setParameter('nombreCliente', $nombreCliente);
+        $resultados = $consulta->getResult();
+
+
+        $fechaActual = new \DateTime();
+        $fechaActualFormateada = $fechaActual->format('d-m-Y');
+        $gratuito = "ROLE_GRATUITO";
+        
+        //Verifica que resultados no este vacio y que se encuentre la clave 0 dentro del resultados
+        if(!empty($resultados) && isset($resultados[0])){
+            if($resultados[0]['fecha_caducidad'] >= $fechaActualFormateada){
+                $titulos = $repository->findAll();
+            }
+            
+
+            if($resultados[0]['fecha_caducidad'] < $fechaActualFormateada){
+                dump($gratuito);
+                dump('yes');
+                //query para buscar titulos que no sean premium
+                $titulos = $repository->createQueryBuilder('t')
+                    ->andWhere('t.premium LIKE :rol')
+                    ->setParameter('rol', '%' . json_encode($gratuito) . '%')
+                    ->getQuery()
+                    ->getResult();
+            }
+        }else{
+             //query para buscar titulos que no sean premium
+            $titulos = $repository->createQueryBuilder('t')
+                ->andWhere('t.premium LIKE :rol')
+                ->setParameter('rol', '%' . json_encode($gratuito) . '%')
+                ->getQuery()
+                ->getResult();
+        }
+
+        return $titulos;
+        
+    }
+
+    private function msgError(){
+        return $this->addFlash('error','No existe ningun titulo');
     }
 
 }

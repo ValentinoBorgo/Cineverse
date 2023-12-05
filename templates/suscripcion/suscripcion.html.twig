@@ -9,10 +9,6 @@
 	</div>
 </div>
 
-{% if cliente is defined %}
-{{ dump(cliente) }}
-{% endif %}
-
 
 <form style="margin: 1rem;" action="{{ path('mostrar_suscripcion') }}" method="post" id="form_suscripcion" >
     <label for="duracion_suscripcion">Duración de suscripción (Planes disponibles para 1, 3 o 6 meses)</label>

@@ -39,7 +39,7 @@ class Titulo
     #[ORM\Column(length: 255)]
     private ?array $comentario = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type : 'json')]
     private ?array $premium = null;
 
     #[ORM\ManyToMany(targetEntity: Cliente::class, mappedBy: 'ClienteTitulo')]

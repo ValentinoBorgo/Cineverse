@@ -22,3 +22,8 @@ cancelar_suscripcion:
 poner_megusta:
     path: /titulo
     controller: App\Controller\TituloManager::ponerMeGusta
+
+comentar:
+    path: /comentar/{id}
+    controller: App\Controller\TituloManager::comentar
+    methods: ['POST']

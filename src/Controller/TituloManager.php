@@ -80,6 +80,48 @@ class TituloManager extends AbstractController{
         ]);
     }
 
+    /**
+    * @Route("/comentar/{id}", name="comentar", methods={"POST"})
+    */
+    public function comentar(ManagerRegistry $doctrine, Request $request, int $id){
+
+        try{
+            $usuario = $this->getUser();
+            $nombreUsuario = $usuario->getNombre();
+    
+            dump($request);
+    
+            $comentario = $request->request->get('comentario');
+    
+            dump($comentario);
+    
+            $repository = $doctrine->getRepository(Titulo::class);
+            $titulo = $repository->find($id);
+            
+            $comentarios = $titulo->getComentario();
+            $pusheo_comentarios[] = [$nombreUsuario, $comentario];
+            array_push($comentarios, ...$pusheo_comentarios); 
+            $titulo->setComentario($comentarios);
+    
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($titulo);
+            $entityManager->flush();
+    
+            dump($titulo);
+    
+            $this->addFlash('exito','Reseña Publicada ');
+    
+            return $this->render('titulo/info_titulo.html.twig',[
+                'nombreUsuario' => $nombreUsuario,
+                'titulo_info' => $titulo
+            ]);
+        }catch(\Exeption $e){
+            return throw new \RuntimeException('Error al dejar una reseña : ' . $e->getMessage());
+        }
+    }
+
+    
+
 }
 
 ?>

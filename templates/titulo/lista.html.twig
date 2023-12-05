@@ -64,6 +64,22 @@
 			</button>
 		</form>
 	</nav>
+
+	{% for label, messages in app.flashes() %}
+	{% for message in messages %}
+		{% if label == 'exito' %}
+		</br>
+		<div class="alert alert-success">
+			{{message}}
+		</div>
+		{% else %}
+		</br>
+		<div class="alert alert-danger">
+			{{message}}
+		</div>
+		{% endif %}
+	{% endfor %}
+	{% endfor %}
     
 	<div style="display: flex; flex-wrap: wrap; justify-content: space-around; padding: 4rem;">
 		{% for dat in data %}
