@@ -1,0 +1,18 @@
+body {
+    background: radial-gradient(circle at 20% 50%, #3498db, transparent 300px),
+                radial-gradient(circle at 80% 50%, #2c3e50, transparent 300px);
+    background-color: #2c3e50; 
+    color: white;
+    position: relative;
+    margin: 0;  
+}
+#imgContainer {
+    width: 20%; 
+    margin-left: 15%; 
+}
+
+#imagenDinamica {
+    width: 180px; 
+    border-radius: 0.5rem;
+
+}

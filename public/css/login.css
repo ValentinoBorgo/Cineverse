@@ -1,0 +1,49 @@
+body {
+    background: radial-gradient(circle at 20% 50%, #3498db, transparent 300px),
+                radial-gradient(circle at 80% 50%, #2c3e50, transparent 300px);
+    background-color: #2c3e50; 
+    position: relative;
+    margin: 0;  
+}
+#div_formulario_login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#form_login {
+    max-width: 600px;
+    width: 100%;
+    border: 3px solid #1db1b1;
+    border-radius: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    color: #2c3e50;
+}
+#form_login .h3_login {
+    margin-bottom: 1rem; 
+    text-align: center; 
+}
+#login-titulo {
+    text-align: center;
+}
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.acciones-formulario {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px; /* Espacio entre los botones */
+}
+
+.mensaje-registro {
+    margin-right: 30px;
+    text-align: center;
+}

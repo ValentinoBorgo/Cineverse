@@ -1,0 +1,52 @@
+
+body {
+    /* Fondo con ondas suaves */
+    background: radial-gradient(circle at 20% 50%, #3498db, transparent 300px),
+                radial-gradient(circle at 80% 50%, #2c3e50, transparent 300px);
+    background-color: #2c3e50; /* Color de fondo detrás del patrón */
+    position: relative;
+    margin: 0;  /* Se elimina overflow: hidden */
+}
+/* Estilos para el contenedor del formulario de suscripción */
+#div_formulario_suscripcion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
+}
+
+/* Estilos para el formulario de suscripción */
+#form_suscripcion {
+    max-width: 600px;
+    width: 100%;
+    border: 3px solid #1db1b1;
+    border-radius: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    color: #2c3e50; /* Azul oscuro */
+}
+
+/* Resto de los estilos permanecen iguales */
+
+/* Estilos para las etiquetas dentro del formulario */
+#form_suscripcion label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilos para los elementos 'select' e 'input' dentro del formulario */
+#form_suscripcion select,
+#form_suscripcion input[type="value"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+/* Estilos para el título h2 dentro del formulario */
+#form_suscripcion .h2_suscripcion {
+    margin-bottom: 1rem; /* Agrega un espacio debajo del título */
+    text-align: center; /* Centra el título */
+}

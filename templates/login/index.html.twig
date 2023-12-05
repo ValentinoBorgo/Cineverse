@@ -1,23 +1,25 @@
 {% extends 'base.html.twig' %}
-
+{# index.html.twig #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
 {% block body %}
 
 <div id="logo-container">
     <img src="{{ asset('c_logo.jpg') }}" alt="Logo de Cineverse" id="logo">
 </div>
-
-
+<div id="div_formulario_login">
 <form action = "{{ path('app_login') }}" method="post" accept-charset="UTF-8" id="form_login">
-
+    <h2 id="login-titulo"> Iniciar Sesion </h2>
     <input type="hidden" name="action" value="users/login">
 
-    <h3><label for="loginName">Username</label></h3>
+    <h3 id="h3_login"><label for="loginName">Nombre de usuario</label></h3>
     <div class="input-group" style="margin-top: 10px;">
         <input id="loginName" type="text" name="_username" value="{{ last_username }}" style="width: 400px;"  class="form-control">
     </div>
 
-
-    <h3><label for="password">Contraseña</label></h3>
+    <h3 id="h3_login"><label for="password">Contraseña</label></h3>
     <div class="input-group" style="margin-top: 10px;">
         <input id="password" type="password" name="_password" class="form-control" style="margin-right: 10px;">
         <button type="button" id="togglePassword" class="btn btn-outline-secondary" style="border-radius: 0.5rem;">Mostrar</button>
@@ -25,11 +27,16 @@
 
     </br>
 
-    <div>
-        <button type="submit" class="btn btn-success">Ingresar</button>
-        <a href="{{ path('registro_cliente') }}" class="btn btn-primary">Registro</a>
+   <div class="main-container">
+   <div class="mensaje-registro">
+        <p>¿No tienes cuenta?</p>
+    </div>
+    <div class="acciones-formulario">
+        <button type="submit" class="btn btn-outline-success">Ingresar</button>
+        <a href="{{ path('registro_cliente') }}" class="btn btn-outline-primary">Registrate</a>
         <a href="{{ path('mok_datos') }}" class="btn btn-dark">MOK Clientes</a>
     </div>
+</div>
 
     {% if error != null %}
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -39,7 +46,7 @@
             <strong class="me-auto">Datos Erroneos</strong>
             <small>Ahora</small>
           </div>
-          <div class="toast-body">
+          <div class="toast-body" >
             <b style="color: red;">
                 Usuario o contraseña erroneos
             </b>
@@ -49,7 +56,7 @@
     {% endif %}
 
 </form>
-
+</div>
 <script>
     setTimeout(function() {
         $('#liveToast').fadeOut(1000, function() {
