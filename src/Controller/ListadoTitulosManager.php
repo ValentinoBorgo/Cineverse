@@ -12,7 +12,12 @@ use App\Repository\TituloRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime as DateTimeConstraint;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Validation;
+use Monolog\Utils\DateTimeImmutable;
+
+
 
 class ListadoTitulosManager extends AbstractController
 {
@@ -246,19 +251,18 @@ class ListadoTitulosManager extends AbstractController
 
 
         $fechaActual = new \DateTime();
-        $fechaActualFormateada = $fechaActual->format('d-m-Y');
         $gratuito = "ROLE_GRATUITO";
         
         //Verifica que resultados no este vacio y que se encuentre la clave 0 dentro del resultados
         if(!empty($resultados) && isset($resultados[0])){
-            if($resultados[0]['fecha_caducidad'] >= $fechaActualFormateada){
+            //Parseo de fecha en string a date
+            $fechaBD = \DateTime::createFromFormat('d/m/Y', $resultados[0]['fecha_caducidad']);
+            if($fechaBD >= $fechaActual){
                 $titulos = $repository->findAll();
             }
             
 
-            if($resultados[0]['fecha_caducidad'] < $fechaActualFormateada){
-                dump($gratuito);
-                dump('yes');
+            if($fechaBD < $fechaActual){
                 //query para buscar titulos que no sean premium
                 $titulos = $repository->createQueryBuilder('t')
                     ->andWhere('t.premium LIKE :rol')
