@@ -116,6 +116,7 @@
         let contraseña = document.getElementById('contraseñaOrg').value;
         let contraseña_repetida = document.getElementById('contraseña_repetida').value;
         let contraseña_erronea = document.getElementById('contraseñaErronea');
+        //Expresiones regulares
         let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
 
         if (!regex.test(contraseña)) {

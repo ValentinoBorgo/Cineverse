@@ -21,7 +21,7 @@ use Monolog\Utils\DateTimeImmutable;
 
 class ListadoTitulosManager extends AbstractController
 {
-    private $APIKEY = 'ef9f64bda8bdd0db0e311faeb006b5e6';
+    private $APIKEY = 'Tu apiket de THEMOVIEDB';
     private $pag = 30;
 
     /**

@@ -14,7 +14,7 @@ use App\Entity\Titulo;
 
 class TituloManager extends AbstractController{
 
-    private $APIKEY = 'AIzaSyC_kXT-aZcdRZI4wmwlkni9um8eTNlo7G4';
+    private $APIKEY = 'Tu apiket YOUTUBE DATA API V3';
     private $maxResults = 10;
 
     /**
