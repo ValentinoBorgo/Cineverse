@@ -18,7 +18,7 @@ Este repositorio contiene un proyecto dirigido a una materia de la tecnicatura q
 2 - Ejecutar en la carpeta del proyecto : composer install</br>
 3 - Levantar un servidor local en XAMPP o Laragon</br>
 4 - Crear una base de datos con el nombre : php bin/console doctrine:database:create --connection=default --if-not-exists cineverse</br>
-5 - Asociar la bd al proyecto en el archivo .env
+5 - Asociar la bd al proyecto en el archivo .env</br>
 6 - Ejecutar el siguiente comando : php bin/console make:migration</br>
 7 - Ejecutar el siguiente comando : php bin/console doctrine:migrations:migrate</br>
 8 - Generar una APIKEY en  https://www.themoviedb.org/ y colocarla en el archivo ListadoTitulosManager.php la variable con nombre $APIKEY</br>
