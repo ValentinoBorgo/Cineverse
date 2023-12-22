@@ -1,4 +1,5 @@
-<img src="https://raw.githubusercontent.com/ValentinoBorgo/Cineverse/cec23920ff829c0b602a0bd32a1796892bbf9fd7/public/c.svg" alt="" width="50px"> ## Cineverse
+<img src="https://raw.githubusercontent.com/ValentinoBorgo/Cineverse/cec23920ff829c0b602a0bd32a1796892bbf9fd7/public/c.svg" alt="" width="50px"> 
+## Cineverse
 
 Este repositorio contiene un proyecto dirigido a una materia de la tecnicatura que estoy cursando, este se trata de una web enfocada en visualizar e interactuar con titulos multimedia como peliculas, series y documentales, realizada en PHP basandonos en el framework Symfony.
 
