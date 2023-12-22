@@ -127,6 +127,7 @@ class TituloManager extends AbstractController{
                 'nombreUsuario' => $nombreUsuario,
                 'titulo_info' => $titulo
             ]);
+            
         }catch(\Exeption $e){
             return throw new \RuntimeException('Error al dejar una reseña : ' . $e->getMessage());
         }
