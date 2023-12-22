@@ -51,6 +51,9 @@ class Titulo
     #[ORM\Column(length: 2083)]
     private ?string $video = null;
 
+    #[ORM\Column(type : 'json')]
+    private array $idUsuarioMG = [];
+
     public function __construct()
     {
         $this->TituloCliente = new ArrayCollection();
@@ -222,6 +225,18 @@ class Titulo
     public function setVideo(string $video): static
     {
         $this->video = $video;
+
+        return $this;
+    }
+
+    public function getIdUsuarioMG()
+    {
+        return $this->idUsuarioMG;
+    }
+
+    public function setIdUsuarioMG(array $idUsuarioMG)
+    {
+        $this->idUsuarioMG = $idUsuarioMG;
 
         return $this;
     }

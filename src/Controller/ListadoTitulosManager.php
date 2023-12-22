@@ -144,6 +144,7 @@ class ListadoTitulosManager extends AbstractController
                 $roles = ['ROLE_PREMIUM', 'ROLE_GRATUITO'];
                 $titulo->setPremium([$roles[array_rand($roles)]]);
                 $titulo->setVideo('');
+                $titulo->setIdUsuarioMG([]);
 
                 $apiIMG = 'https://image.tmdb.org/t/p/w500' .$result['known_for'][0]['backdrop_path'];
                 $titulo->setImagen($apiIMG);
