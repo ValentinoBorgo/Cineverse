@@ -2,7 +2,7 @@
 
 ## Cineverse
 
-Este repositorio contiene un proyecto dirigido a una materia de la tecnicatura que estoy cursando, este se trata de una web enfocada en visualizar e interactuar con titulos multimedia como peliculas, series y documentales, realizada en PHP basandonos en el framework Symfony.
+Este repositorio contiene un proyecto que se trata de una web enfocada en visualizar e interactuar con titulos multimedia como peliculas, series y documentales, realizada en PHP basandonos en el framework Symfony.
 
 ## Características
 
