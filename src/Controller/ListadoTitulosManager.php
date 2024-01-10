@@ -110,7 +110,7 @@ class ListadoTitulosManager extends AbstractController
             $titulos = $titulosDATA;
         }
 
-        if(!$titulos){
+        if(empty($titulos)){
             $titulos = $this->msgError();
         }
         
