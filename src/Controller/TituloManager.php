@@ -52,7 +52,7 @@ class TituloManager extends AbstractController{
         ]);
     }
 
-     /**
+    /**
     * @Route("/{id}", name="poner_megusta")
     */
     public function ponerMeGusta(ManagerRegistry $doctrine){
@@ -67,30 +67,50 @@ class TituloManager extends AbstractController{
         $repository = $doctrine->getRepository(Titulo::class);
         $titulo = $repository->find($id);
         $mg_titulo_user = $titulo->getIdUsuarioMG();
+        $foundUserId = "";
 
         if(count($mg_titulo_user) == 0 && $titulo->getme_gusta() == 0){
             array_push($mg_titulo_user, $usuario->getId());
             $titulo->setIdUsuarioMG($mg_titulo_user);
             $numeroMG = $titulo->getme_gusta();
             $titulo->setMeGusta($numeroMG + 1);
+            dump("Igual a 0");
         }else{
             for($i = 0; $i < count($mg_titulo_user); $i++){
-                if($mg_titulo_user[$i] == $usuario->getId() && $titulo->getme_gusta() == 1) {
-                    unset($mg_titulo_user[$i]);
+                if($mg_titulo_user[$i] == $usuario->getId()) {
+                    $foundUserId = $usuario->getId();
+                    break;
+                }
+            }
+
+            if($foundUserId != "" && $foundUserId != null){
+                $index = array_search($foundUserId, $mg_titulo_user);
+                if($index !== false){
+                    unset($mg_titulo_user[$index]);
                     $mg_titulo_user = array_values($mg_titulo_user);
                     $titulo->setIdUsuarioMG($mg_titulo_user);
                     $numeroMG = $titulo->getme_gusta();
                     $titulo->setMeGusta($numeroMG - 1);
-                    break;
-                }else{
-                    array_push($mg_titulo_user, $usuario->getId());
+                }
+            }else{
+                $foundUserId = $usuario->getId();
+                    array_push($mg_titulo_user, $foundUserId);
                     $titulo->setIdUsuarioMG($mg_titulo_user);
                     $numeroMG = $titulo->getme_gusta();
                     $titulo->setMeGusta($numeroMG + 1);
-                    break;
-                }
             }
+
         }
+        
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($titulo);
+        $entityManager->flush();
+
+        return $this->render('titulo/info_titulo.html.twig',[
+            'nombreUsuario' => $nombreUsuario,
+            'titulo_info' => $titulo
+        ]);
+    }
 
     /**
     * @Route("/comentar/{id}", name="comentar", methods={"POST"})
