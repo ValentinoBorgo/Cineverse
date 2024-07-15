@@ -31,7 +31,7 @@ This repository contains a project that is a web focused on viewing and interact
 
 Contributions are always welcome. If you encounter any problems or have any suggestions, feel free to open an issue or send a pull request.
 
-## Autores
+## Authors
 
 Cozzi Osvaldo</br>
 Borgo Valentino</br>
