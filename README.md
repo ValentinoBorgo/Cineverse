@@ -2,34 +2,34 @@
 
 ## Cineverse
 
-Este repositorio contiene un proyecto que se trata de una web enfocada en visualizar e interactuar con titulos multimedia como peliculas, series y documentales, realizada en PHP basandonos en el framework Symfony.
+This repository contains a project that is a web focused on viewing and interacting with multimedia titles such as movies, series and documentaries, made in PHP based on the Symfony framework.
 
-## Características
+## Features
 
-- Filtrado de titulo deseado.
-- Division en categorias.
-- Funcionalidades tales como reproducir un trailer, dar mg, dejar una reseña y abonar un paquete premiun.
+- Filtering of desired title.
+- Division into categories.
+- Functionalities such as play a trailer, give mg, leave a review and pay for a premium package.
 
-## Tecnologías utilizadas
+## Technologies used
 
 - ![PHP](https://img.shields.io/badge/-PHP-333333?style=flat&logo=PHP)</br>
 - ![Symfony](https://img.shields.io/badge/-Symfony-333333?style=flat&logo=Symfony)</br>
 
-## Instalación
-1 - Clonar el repositorio</br>
-2 - Ejecutar en la carpeta del proyecto : composer install</br>
-3 - Levantar un servidor local en XAMPP o Laragon</br>
-4 - Crear una base de datos con el nombre : php bin/console doctrine:database:create --connection=default --if-not-exists cineverse</br>
-5 - Asociar la bd al proyecto en el archivo .env</br>
-6 - Ejecutar el siguiente comando : php bin/console make:migration</br>
-7 - Ejecutar el siguiente comando : php bin/console doctrine:migrations:migrate</br>
-8 - Generar una APIKEY en  https://www.themoviedb.org/ y colocarla en el archivo ListadoTitulosManager.php la variable con nombre $APIKEY</br>
-9 - Generar una APIKEY de Youtube DATA API V3 y colocarla en el archivo TituloManager.php la variable con nombre $APIKEY</br>
-10 - En el navegador de su preferencia intoducir la siguiente direccion : http://localhost/cineverse/public/</br>
+## Installation
+1 - Clone the repository</br>
+2 - In the project folder, run: composer install</br>
+3 - Start a local server in XAMPP or Laragon</br>
+4 - Create a database with the name: php bin/console doctrine:database:create --connection=default --if-not-exists cineverse</br>
+5 - Link the database to the project in the .env file</br>
+6 - Run the following command: php bin/console make:migration</br>
+7 - Run the following command: php bin/console doctrine:migrations:migrate</br>
+8 - Generate an APIKEY at https://www.themoviedb.org/ and place it in the ListadoTitulosManager.php file in the variable named $APIKEY</br>
+9 - Generate a Youtube DATA API V3 APIKEY and place it in the TituloManager.php file in the variable named $APIKEY</br>
+10 - In your preferred browser, enter the following address: http://localhost/cineverse/public/</br>
 
-## Contribuciones
+## Contributions
 
-Las contribuciones son siempre bienvenidas. Si encuentras algún problema o tienes alguna sugerencia, no dudes en abrir un issue o enviar un pull request.
+Contributions are always welcome. If you encounter any problems or have any suggestions, feel free to open an issue or send a pull request.
 
 ## Autores
 
